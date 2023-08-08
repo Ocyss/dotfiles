@@ -6,3 +6,7 @@ fcitx5/rime/rime_ice.userdb
 mpd/mpdstate
 *.log
 zsh/zhistory
+temp
+fcitx5/rime/user.yaml
+
+

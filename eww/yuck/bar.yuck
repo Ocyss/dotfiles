@@ -61,7 +61,7 @@
     :height "36px"
   :anchor "top center")
   :stacking "fg"
-  :windowtype "dock"
+  :windowtype "desktop"
   (box :class "bar_class" :orientation "h"
     (left)
     (center)
