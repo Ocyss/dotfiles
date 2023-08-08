@@ -1,0 +1,70 @@
+;; Variables
+(include "yuck/bar/left.yuck")
+(include "yuck/bar/center.yuck")
+(include "yuck/bar/right.yuck")
+
+(defwidget sep []
+  (box :class "module-2" :vexpand false :hexpand false
+    (label :class "separ" :text "|")))
+
+(defwidget clock_module []
+  (eventbox :onhover "eww update time_rev=true"
+    :onhoverlost "eww update time_rev=false"
+    :cursor "pointer"
+    (box :class "module" :space-evenly false :orientation "h" :spacing "3"
+      (label :text clock_time :class "clock_minute_class")
+      (revealer :transition "slideleft"
+        :reveal time_rev
+        :duration "350ms"
+        (button :class "clock_date_class"
+        :onclick "eww open-many --toggle calendar" clock_date)))))
+
+
+(defwidget left []
+  (box :orientation "h"
+    :space-evenly false
+    :halign "start"
+    (powermenu_botton)
+    (sep)
+    (workspaces)
+    (sep)
+    (weather)
+    (electricity)
+  ))
+
+(defwidget center []
+  (box :orientation "h"
+    :space-evenly false
+    :halign "center"
+    :class "center_modules"
+    (music)))
+
+
+(defwidget right []
+  (box :orientation "h"
+    :space-evenly false
+    :halign "end"
+    (tray)
+    (sep)
+    (volume)
+    (wifi)
+    (sep)
+    (mem)
+    (sep)
+    (clock_module)))
+
+
+(defwindow bar
+  :geometry (geometry :x "0%"
+    :y "7px"
+    :width "98%"
+    :height "36px"
+  :anchor "top center")
+  :stacking "fg"
+  :windowtype "dock"
+  (box :class "bar_class" :orientation "h"
+    (left)
+    (center)
+    (right)))
+
+

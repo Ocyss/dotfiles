@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+#  ╔╗ ╔═╗╔═╗╦ ╦╔╦╗  - z0mbi3
+#  ╠╩╗╚═╗╠═╝║║║║║║  - https://github.com/gh0stzk/dotfiles
+#  ╚═╝╚═╝╩  ╚╩╝╩ ╩  - z0mbi3.zk@protonmail.com
+
+
+#  ┬┌┬┐┌─┐┌─┐┬─┐┌┬┐┌─┐┌┐┌┌┬┐  ┬  ┬┌─┐┬─┐┬┌─┐┌┐ ┬  ┌─┐┌─┐
+#  ││││├─┘│ │├┬┘ │ ├─┤│││ │   └┐┌┘├─┤├┬┘│├─┤├┴┐│  ├┤ └─┐
+#  ┴┴ ┴┴  └─┘┴└─ ┴ ┴ ┴┘└┘ ┴    └┘ ┴ ┴┴└─┴┴ ┴└─┘┴─┘└─┘└─┘
+
+#read -r RICETHEME < "$HOME"/.config/bspwm/.rice
+#export RICETHEME
+PATH="$HOME/.config/bspwm/scripts:$PATH"
+
+## Fix java applications
+export _JAVA_AWT_WM_NONREPARENTING=1
+export AWT_TOOLKIT=MToolkit
+export JDK_JAVA_OPTIONS='-Dsun.java2d.opengl=true'
+#  ┬ ┬┌─┐┬─┐┬┌─┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐
+#  ││││ │├┬┘├┴┐└─┐├─┘├─┤│  ├┤ └─┐
+#  └┴┘└─┘┴└─┴ ┴└─┘┴  ┴ ┴└─┘└─┘└─┘
+
+workspaces() {
+	name=1
+	for monitor in $(bspc query -M); do
+		bspc monitor "${monitor}" -n "$name" -d '1' '2' '3' '4' '5' '6' '7' '8'
+		#bspc monitor ${monitor} -n "$name" -d '' '' '' '' '' ''
+		(( name++ ))
+	done
+}
+
+workspaces
+
+#  ┌┐ ┌─┐┌─┐┬ ┬┌┬┐  ┌─┐┌─┐┌┐┌┌─┐┬┌─┐
+#  ├┴┐└─┐├─┘││││││  │  │ ││││├┤ ││ ┬
+#  └─┘└─┘┴  └┴┘┴ ┴  └─┘└─┘┘└┘└  ┴└─┘
+
+bspc config external_rules_command $HOME/.config/bspwm/scripts/ExternalRules
+
+# 分流比
+bspc config split_ratio                   0.52
+# 单窗口铺满
+bspc config single_monocle                true
+# 底部窗口填充
+bspc config borderless_monocle            true
+# 取消填充间隙
+bspc config gapless_monocle               true
+# 焦点跟随指针
+bspc config focus_follows_pointer         true
+# 指针跟随焦点
+bspc config pointer_follows_focus         false
+# 指针运动间隔
+bspc config pointer_motion_interval       5
+# 指针修饰符
+bspc config pointer_modifier              mod4 
+# 指针动作
+bspc config pointer_action1               move 
+bspc config pointer_action2               resize_side 
+bspc config pointer_action3               resize_corner
+# 边框宽度
+bspc config border_width			      2
+# 窗口间隙
+bspc config window_gap					  8
+# 正常边框颜色
+bspc config normal_border_color           '#908caa'
+# 上下左右 填充大小
+bspc config top_padding                   59
+bspc config bottom_padding                2
+bspc config left_padding                  2
+bspc config right_padding                 2
+#bspc config normal_border_color           "#C574DD"
+bspc config active_border_color           "#C574DD"
+# 触摸边框颜色
+bspc config focused_border_color          "#56949f"
+bspc config presel_feedback_color         "#FF4971"
+
+# 忽略全屏
+#bspc config ignore_ewmh_fullscreen        enter
+# 忽略struts
+#bspc config ignore_ewmh_struts            true
+### styls
+
+
+
+$HOME/.config/bspwm/start

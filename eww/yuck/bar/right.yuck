@@ -1,0 +1,154 @@
+(defpoll clock_time :interval "1s" "date +%H:%M:%S")
+(defpoll clock_date :interval "10h" "date '+%Y/%m/%d %A'")
+
+(defpoll volume_percent :interval "1m" "pamixer --get-volume-human | sed 's/%//'")
+
+(defpoll memory :interval "15s" "scripts/memory")
+(defpoll memory_used_mb :interval "2m" "scripts/mem-ad used")
+(defpoll memory_total_mb :interval "2m" "scripts/mem-ad total")
+(defpoll memory_free_mb :interval "2m" "scripts/mem-ad free")
+
+(deflisten wifi_connected "scripts/wifi -m")
+(deflisten wifi_speed  "scripts/wifi -ns")
+(defpoll calendar_day :interval "20h" "date '+%d'")
+(defpoll calendar_year :interval "20h" "date '+%Y'")
+
+(defvar vol_reveal false)
+(defvar music_reveal false)
+(defvar wifi_rev false)
+(defvar time_rev false)
+(defvar ssid "")
+(defvar tray_icon '')
+
+
+
+(defwidget tray []
+  (eventbox
+    :cursor "pointer" :onclick "scripts/toggle_tray"
+    (label
+      :class "tray_icon"
+    :text "${tray_icon}")))
+
+(defwidget volume []
+  (eventbox :onhover "eww update vol_reveal=true"
+    :onhoverlost "eww update vol_reveal=false"
+    :cursor "pointer"
+    (box :space-evenly false :orientation "h" :spacing "3"
+      (button :onclick "pavucontrol &" :class "volume_icon" ``)
+      (revealer :transition "slideleft"
+        :reveal vol_reveal
+        :duration "350ms"
+        (scale :class "volbar"
+          :value volume_percent
+          :orientation "h"
+          :tooltip "${volume_percent}%"
+          :max 151
+          :min 0
+        :onchange "pamixer --allow-boost --set-limit 150 --set-volume {} && ~/.config/scripts/volume_dunst && eww update volume_percent={}")))))
+
+
+
+(defwidget wifi []
+  (eventbox
+    :onhover "eww update wifi_rev=true"
+    :onhoverlost "eww update wifi_rev=false"
+    :cursor "pointer"
+    :tooltip ssid
+    (box :vexpand false :hexpand false :space-evenly false
+      (button
+        :class "${wifi_connected == "true" ? "wifi_icon" : "wifi_off_icon"}"
+      :wrap false :limit-width 12 "${wifi_connected == "true" ? `` : ""}")
+      (label :class "wifi_speed" :text "${wifi_speed}")
+      ; (revealer :transition "slideright"
+        ;   :reveal wifi_rev
+        ;   :duration "350ms"
+        ;   (label :class "ssid_text"
+          ;     :text "${wifi_connected == "true" ? `${ssid}` : "无"}"
+        ;   :orientation "h"))
+    )))
+
+(defwidget powermenu_botton []
+  (eventbox :cursor "pointer"
+    (box :class "powermenu_botton" :vexpand: false :hexpand: false
+      (button :onclick "eww open-many --toggle powermenu" ""))))
+
+(defwidget workspaces []
+  (literal :content workspace))
+
+
+(defwidget mem []
+  (box :class "mem_module" :vexpand false :hexpand false
+    (circular-progress :value memory
+      :class "membar"
+      :thickness 4
+      (button
+        :class "iconmem"
+        :limit-width 2
+        :tooltip "using ${memory}% ram"
+        :onclick "eww open-many --toggle system"
+        :show_truncated false
+        :wrap false
+      ""))))
+
+
+
+(defwidget cal []
+  (box :class "cal" :orientation "v"
+    (box :class "cal-in"
+      (calendar :class "cal"
+        :day calendar_day
+      :year calendar_year))))
+
+
+(defwindow calendar
+  ; 日历
+  :geometry (geometry :x "-20px"
+    :y "7%"
+    :anchor "top right"
+    :width "270px"
+  :height "60px")
+  (cal))
+
+
+(defwidget system []
+  (box :class "sys_win" :orientation "v" :space-evenly false :hexpand false :vexpand false :spacing 0
+    (box :class "sys_box" :orientation "h" :space-evenly false
+      (box :orientation "v" :space-evenly false :spacing 0 :hexpand false :vexpand false))
+    (label :text "" :class "sys_sep" :halign "center")
+    (box :class "sys_mem_box" :orientation "h" :space-evenly false :halign "start"
+      (circular-progress :value memory
+        :class "sys_mem"
+        :thickness 9
+        (label :text ""
+          :class "sys_icon_mem"
+          :limit-width 2
+          :show_truncated false
+          :wrap false
+        :angle 0.0))
+      (box :orientation "v" :space-evenly false :spacing 0 :hexpand false :vexpand false
+        (label :text "memory"
+          :halign "start"
+          :class "sys_text_mem"
+          :limit-width 9
+          :show_truncated false
+        :wrap false)
+        (label :text "${memory_used_mb}|${memory_total_mb}mb "
+          :halign "start"
+          :class "sys_text_mem_sub"
+          :limit-width 22
+          :show_truncated false
+        :wrap false)
+        (label :text "${memory_free_mb}mb free"
+          :halign "start"
+          :class "sys_text_mem_sub"
+          :limit-width 22
+          :show_truncated false
+        :wrap false)))))
+
+(defwindow system
+  :geometry (geometry :x "-20px"
+    :y "7%"
+    :anchor "top right"
+    :width "290px"
+  :height "120px")
+  (system))

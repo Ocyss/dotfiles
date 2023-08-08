@@ -1,0 +1,30 @@
+#!/bin/sh
+workspaces() {
+    # no:没东西 off:有东西 on:当前所在页
+
+    ws=("" "no" "no" "no" "no" "no" "no" "no" "no")
+    ic=("" "󰑊" "󰑊" "󰑊" "󰑊" "󰑊" "󰑊" "󰑊" "󰑊")
+    res="(eventbox :cursor 'pointer' (box :class 'works' :orientation 'h' :spacing 5 :space-evenly 'false'"
+
+    for line in `bspc query -D -d .occupied --names`;do
+        ws[$line]="off"
+        ic[$line]="󰊠"
+    done
+
+    for line in `bspc query -D -d focused --names`;do
+        ws[$line]="on"
+        ic[$line]="󰮯"
+    done
+
+    un="workspace"
+
+    for (( i=1;i<${#ws[@]};i++)) do
+        res="$res  (button :onclick 'bspc desktop -f $i' :class '$un ${ws[$i]}' '${ic[$i]}')"
+    done
+    echo ${res}"))"
+}
+
+workspaces
+bspc subscribe desktop_focus node_add node_remove 2> /dev/null | while read line; do
+    workspaces
+done

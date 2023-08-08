@@ -1,0 +1,48 @@
+#!/bin/bash
+
+DIR="$HOME/.config/dunst/icons"
+
+function get_volume() {
+	pamixer --get-volume-human | sed 's/%//'
+}
+
+
+function send_notification() {
+    volume=$(get_volume)
+    eww update volume_percent=${volume}
+    if [[ $(pamixer --get-mute) == true ]]; then
+        icon_name="$DIR/notification-audio-volume-muted.svg"
+        dunstify "Muted  " -i $icon_name -t 1000 -r 5555 -u low -h string:synchronous:audio-volume
+    # fi
+    else
+        if [ "$volume" = "0" ]; then
+        icon_name="$DIR/notification-audio-volume-muted.svg"
+        elif [ "$volume" -lt "30" ]; then
+            icon_name="$DIR/notification-audio-volume-low.svg"
+        elif [ "$volume" -lt "70" ]; then
+            icon_name="$DIR/notification-audio-volume-medium.svg"
+        else
+            icon_name="$DIR/notification-audio-volume-high.svg"
+        fi
+        dunstify "$volume%  " -i $icon_name -t 1000 -r 5555 -u low -h int:value:$(($volume))
+    fi
+}
+
+case $1 in
+    up)
+        [[ $(pamixer --get-mute) == true ]] && pamixer -u
+        if [ $(get_volume) -ge 100  ]; then
+	        pamixer --allow-boost --set-limit 150 -i 1
+        else
+	        pamixer --allow-boost --set-limit 150 -i 5
+        fi 
+        ;;
+    down)        
+        [[ $(pamixer --get-mute) == true ]] && pamixer -u
+	    pamixer --allow-boost --set-limit 150 -d 5
+        ;;
+    mute)
+        pamixer --toggle-mute	 
+        ;;
+esac
+send_notification

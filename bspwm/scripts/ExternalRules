@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+#  ╔═╗═╗ ╦╔╦╗╔═╗╦═╗╔╗╔╔═╗╦    ╦═╗╦ ╦╦  ╔═╗╔═╗
+#  ║╣ ╔╩╦╝ ║ ║╣ ╠╦╝║║║╠═╣║    ╠╦╝║ ║║  ║╣ ╚═╗
+#  ╚═╝╩ ╚═ ╩ ╚═╝╩╚═╝╚╝╩ ╩╩═╝  ╩╚═╚═╝╩═╝╚═╝╚═╝
+#  url: https://github.com/gh0stzk/dotfiles
+
+wid=$1
+class=$2
+instance=$3
+consequences=$4
+DATE=`date +%T | sed 's/://g'`
+
+
+main () {
+case "$class" in
+    # 即时通讯
+    wechat.exe|QQ|com.alibabainc.dingtalk|Feishu)
+		wm_name=($(xprop -id $wid | grep "^WM_NAME" | grep -Po '"\K[^,"]+'))
+        #echo "$DATE-$wid:$class/$wm_name{$instance}" >> $HOME/rule.log
+        eval "$consequences"
+        case "$wm_name" in
+          "图片查看器"|"图片查看"|"机器人管理"|"设置")
+	        [ "$state" ] || echo "state=floating focus=on center=on";;
+          "QQ"|"微信"|"钉钉"|"飞书")
+	        [ "$state" ] || echo "state=tiled desktop=^4 follow=on";;
+          *)
+            echo "center=off manage=off";;
+        esac;;
+    TelegramDesktop)
+        eval "$consequences"
+        [ "$state" ] || echo "state=tiled desktop=^4 follow=on"
+        ;;
+    # 浮动窗口
+	Viewnior|Pavucontrol|Motrix|org.gnome.Nautilus|File-roller|burp-StartBurp)
+	    eval "$consequences"
+	    [ "$state" ] || echo "state=floating focus=on center=on"
+		;;
+    FloaTerm)
+		eval "$consequences"
+		[ "$state" ] || echo "state=floating center=on"
+		;;
+	Updating)
+		eval "$consequences"
+		[ "$state" ] || echo "state=floating sticky=on center=on"
+		;;
+	mpv)
+	    eval "$consequences"
+		[ "$state" ] || echo "state=floating focus=on rectangle=1920x1080+0+0 center=on"
+		;;	
+    Spotify)
+		eval "$consequences"
+	    [ "$state" ] || echo "state=pseudo_tiled rectangle=1125x600 desktop=^6 follow=on"
+		;;
+	"") ## spotify hack
+        sleep 0.5
+		wm_class=($(xprop -id $wid | grep "WM_CLASS" | grep -Po '"\K[^,"]+'))
+		class=${wm_class[-1]}
+		[[ ${#wm_class[@]} == "2" ]] && instance=${wm_class[0]}
+		[[ -n "$class" ]] && main
+		;;
+esac
+}
+
+main
+#case "$instance" in
+#     Toolkit)
+#        eval "$consequences"
+#        [ "$state" ] || echo "state=floating sticky=on rectangle=500x290+1054+593"
+#	    ;;
+#esac  

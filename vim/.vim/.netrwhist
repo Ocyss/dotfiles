@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/ocyss/Ocyss/dotfile/XXiaoA/sxhkd'
+let g:netrw_dirhist_6='/home/ocyss/Ocyss/dotfile/XXiaoA/bspwm'
+let g:netrw_dirhist_5='/var/lib/lxdm'
+let g:netrw_dirhist_4='/home/ocyss/.config/bspwm/scripts'
+let g:netrw_dirhist_3='/home/ocyss/.config/bspwm'
+let g:netrw_dirhist_2='/home/ocyss/Ocyss/dotfile/ikz87/Assets'
+let g:netrw_dirhist_1='/home/ocyss/Ocyss/dotfile/ikz87/Configs/dunst'
+let g:netrw_dirhist_0='/home/ocyss/.config/bspwm'
+let g:netrw_dirhist_9='/home/ocyss/.config/polybar/scripts'
+let g:netrw_dirhist_8='/home/ocyss/.config/bspwm/scripts'

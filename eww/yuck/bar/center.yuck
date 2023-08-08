@@ -1,0 +1,27 @@
+(defpoll song_title :interval "1s"  "scripts/music_info --song")
+(deflisten song  :initial "whatever" "python3 scripts/MusicLyrics.py")
+(defpoll song_status :interval "1s" "scripts/music_info --status")
+(defpoll cover_art :interval "1s"  "scripts/music_info --cover")
+(defpoll song_volume :interval "1m"  "mpc status | grep \"volume\" | awk \'{print $2}\'")
+
+
+;;  Music
+(defwidget music []
+  (eventbox :onhover "eww update music_reveal=true"
+    :onhoverlost "eww update music_reveal=false"
+    :cursor "pointer"
+    :onclick "eww open-many --toggle player"
+    (box :class "module-2" :orientation "h" :space-evenly false :vexpand false :hexpand false
+      (revealer :transition "slideright"
+        :reveal music_reveal
+        :duration "350ms"
+        (box :vexpand false :hexpand false :oreintation "h"
+          (button :class "song_btn_prev" :onclick "scripts/music_info --prev" "")
+          (button :class "song_btn_play" :onclick "scripts/music_info --toggle" song_status)
+          (button :class "song_btn_next" :onclick "scripts/music_info --next" "")
+          (button :class "song_btn_dislike" :onclick "scripts/music_info --dislike" "🗑")
+        ))
+      (label :text "${song_volume}")
+      (box :class "song_cover_art" :vexpand false :hexpand false :style "background-image: url('${cover_art}');")
+      (label :class "song" :wrap true :text song)
+    )))

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+
+ld=`xrandr --verbose | grep Brightness | awk '{print $2}'`
+
+
+case "$1" in
+    +)
+        xrandr --output HDMI-1 --brightness `echo $ld | awk '{printf("%.2f",$1+0.1)}'`
+        ;;
+    -)
+        xrandr --output HDMI-1 --brightness `echo $ld | awk '{printf("%.2f",$1-0.1)}'`
+        ;;
+    *)
+        echo $ld;;
+esac
+
+echo $ld

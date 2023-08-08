@@ -1,0 +1,22 @@
+patch:
+  # 仅使用「雾凇拼音」的默认配置（注：此包只包含了默认拼音方案），配置此行即可
+  __include: rime_ice_suggestion:/
+  # 以下可根据自己所需进行自定义，仅做参考。
+  # 仅针对「雾凇输入法」的定制条目，请在 rime_ice.custom.yaml 中配置
+  __patch:
+    # 以词定字（上屏当前词组的第一个或最后一个字）
+    key_binder/+:
+      select_first_character: "minus" # 即 -
+      select_last_character: "equal" # 即 =
+    # shift 英文上屏
+    ascii_composer/switch_key/+:
+        Shift_L: commit_code
+        Shift_R: commit_code
+    key_binder/bindings/=:
+      - { when: paging, accept: bracketleft, send: Page_Up } # 即 [
+      - { when: has_menu, accept: bracketright, send: Page_Down } # 即 ]
+      - { when: composing, accept: KP_Enter, send: Return } # 小键盘回车上屏
+      - { when: composing, accept: Enter, send: Return } # 小键盘回车上屏
+  switcher/hotkeys/=:
+      - Control+grave
+

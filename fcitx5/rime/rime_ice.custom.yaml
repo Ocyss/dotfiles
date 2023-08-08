@@ -1,0 +1,41 @@
+patch:
+  switches/=:
+    - name: ascii_mode
+      states: [ 中, A ]
+      reset: 0
+    - name: ascii_punct # 中英标点
+      states: [ ¥, $ ]
+      reset: 1
+    - name: traditionalization
+      states: [ 简, 繁 ]
+      reset: 0
+    - name: emoji
+      states: [ 💀, 😄 ]
+      reset: 0
+    - name: full_shape
+      states: [ 半角, 全角 ]
+      reset: 0
+
+
+engine:
+  translators:
+    - punct_translator
+    - script_translator
+    - lua_translator@date_translator      # 时间、日期、星期
+    - table_translator@custom_phrase      # 自定义短语 custom_phrase.txt
+    - table_translator@melt_eng           # 英文输入
+    - reverse_lookup_translator@liangfen  # 反查，两分拼字
+    - lua_translator@unicode              # Unicode
+    - lua_translator@number_translator    # 数字、金额大写
+
+
+# 自定义短语：custom_phrase.txt
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase
+  db_class: stabledb
+  enable_completion: false # 补全提示
+  enable_sentence: false   # 禁止造句
+  initial_quality: 99999      # custom_phrase 的权重应该比 pinyin 和 melt_eng 大
+
+

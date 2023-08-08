@@ -1,0 +1,252 @@
+* {
+  all: unset;
+  font-family: feather, Maple Mono SC NF;
+}
+
+/** General **/
+.bar_class {
+  background-color: rgba(27, 26, 39, 0.8);
+  border-radius: 20px;
+}
+
+.module {
+  margin: 0px 0px 0px 0px;
+  border-radius: 10px 16px 0px 10px;
+}
+
+/** tooltip!! **/
+tooltip.background {
+  background-color: rgba(27, 26, 39, 0.95);
+  font-size: 18;
+  border-radius: 10px;
+  color: #cecacd;
+}
+
+tooltip label {
+  margin: 6px;
+}
+
+/** Widgets **/
+
+.clock_time_sep {
+  font-size: 16;
+  color: #bfc9db;
+  margin: 0px 4px 1px 4px;
+}
+.clock_time_class,
+.clock_minute_class {
+  font-size: 23;
+}
+
+.clock_date_class {
+  font-size: 18;
+  margin: 0px 20px 0px -1px;
+  color: #d7beda;
+}
+.clock_minute_class {
+  margin: 0px 20px 0px 3px;
+  color: #bfc9db;
+}
+
+.clock_time_class {
+  color: #bfc9db;
+  font-weight: bold;
+  margin: 0px 5px 0px 0px;
+}
+
+.membar {
+  color: #e0b089;
+  background-color: #38384d;
+  border-radius: 10px;
+}
+.volbar trough highlight {
+  background-image: linear-gradient(
+    to right,
+    #c4a7e7 30%,
+    #c4a7e7 50%,
+    #907aa9 100% * 50
+  );
+  border-radius: 10px;
+}
+.volume_icon {
+  font-size: 22;
+  color: #c4a7e7;
+  margin: 0px 10px 0px 10px;
+}
+
+.tray_icon {
+  font-size: 22;
+  color: rgba(#a1bdce, 0.85);
+  margin: 0px 10px 0px 10px;
+}
+
+.ssid_text {
+  font-size: 18;
+  color: #cecacd;
+  margin: 0px 10px 0px 0px;
+}
+.wifi_icon,
+.wifi_off_icon {
+  font-size: 22;
+  border-radius: 100%;
+  margin: 0px 10px 0px 5px;
+}
+.wifi_icon {
+  color: #7dc5a0;
+}
+.wifi_off_icon {
+  color: #575268;
+}
+
+.iconmem {
+  color: #e0b089;
+  font-size: 15;
+  margin: 10px;
+}
+
+.separ {
+  color: #726f6f;
+  font-weight: bold;
+  font-size: 22px;
+  margin: 0px 8px 0px 8px;
+}
+
+.mem_module {
+  background-color: rgba(27, 26, 39, 0.95);
+  border-radius: 16px;
+  margin: 0px 10px 0px 3px;
+}
+
+scale trough {
+  all: unset;
+  background-color: #22242b;
+  box-shadow: 0 2px 3px 2px #06060b;
+  border-radius: 16px;
+  min-height: 10px;
+  min-width: 70px;
+  margin: 0px 10px 0px 0px;
+}
+
+.works {
+  font-size: 27px;
+  font-weight: normal;
+  margin: 5px 0px 0px 5px;
+}
+
+.powermenu_botton {
+  color: #eb6f92;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 2px 0px 0px 25px;
+}
+
+.song_cover_art {
+  background-size: cover;
+  background-position: center;
+  min-height: 24px;
+  min-width: 24px;
+  margin: 10px;
+  border-radius: 100px;
+}
+
+.song {
+  color: #cecacd;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 3px 5px 0px 0px;
+}
+
+.song_btn_play {
+  color: #dfdad9;
+  font-size: 32px;
+  margin: 3px 0px 0px 5px;
+}
+
+.song_btn_prev,
+.song_btn_next {
+  color: #f4ede8;
+  font-size: 24px;
+  margin: 3px 0px 0px 5px;
+}
+// Calendar
+.cal {
+  background-color: rgba(27, 26, 39, 0.95);
+  font-family: Maple Mono SC NF;
+  font-size: 18px;
+  font-weight: normal;
+
+  .cal-in {
+    padding: 0px 10px 0px 10px;
+    color: #bfc9db;
+
+    .cal {
+      &.highlight {
+        padding: 20px;
+      }
+
+      padding: 5px 5px 5px 5px;
+      margin-left: 10px;
+    }
+  }
+}
+
+calender {
+  color: #bfc9db;
+}
+calendar:selected {
+  color: #7aa2f7;
+}
+
+calendar.header {
+  color: #a1bdce;
+  font-weight: bold;
+}
+
+calendar.button {
+  color: #afbea2;
+}
+
+calendar.highlight {
+  color: #a1bdce;
+  font-weight: bold;
+}
+
+calendar:indeterminate {
+  color: #bfc9db;
+}
+
+.sys_sep {
+  color: #38384d;
+  font-size: 18;
+  margin: 0px 10px 0px 10px;
+}
+.sys_text_mem_sub {
+  font-size: 16;
+  color: #bbc5d7;
+  margin: 5px 0px 0px 25px;
+}
+.sys_text_mem {
+  font-size: 21;
+  font-weight: bold;
+  margin: 14px 0px 0px 25px;
+}
+.sys_icon_mem {
+  font-size: 30;
+  margin: 30px;
+}
+.sys_win {
+  background-color: rgba(27, 26, 39, 0.95);
+}
+.sys_mem {
+  color: #e4c9af;
+  background-color: #38384d;
+  border-radius: 10px;
+}
+.sys_icon_mem,
+.sys_text_mem {
+  color: #e4c9af;
+}
+.sys_mem_box {
+  border-radius: 16px;
+  margin: 10px 10px 15px 20px;
+}

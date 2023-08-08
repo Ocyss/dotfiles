@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+bspc rule -a mpv state=floating center=on rectangle=1130x800+395+140
+bspc rule -a scratch sticky=on state=floating focus=on
+
+# xsetroot -cursor_name left_ptr
+#  ┬  ┌─┐┬ ┬┌┐┌┌─┐┬ ┬  ┌─┐┌─┐─┐ ┬┬ ┬  ┬─┐┬┌─┐┌─┐┌─┐
+#  │  ├─┤│ │││││  ├─┤  └─┐├┤ ┌┴┬┘└┬┘  ├┬┘││  ├┤ └─┐
+#  ┴─┘┴ ┴└─┘┘└┘└─┘┴ ┴  └─┘└─┘┴ └─ ┴   ┴└─┴└─┘└─┘└─┘
+
+# Set system vars for polybar
+. SetSysVars
+
+# 直接启动项
+StartApps=("fcitx5" "qq" "wechat" "motrix" "telegram-desktop" "dingtalk" "feishu" "mailspring")
+# 额外配置启动项
+processes=("picom" "polybar" "sxhkd" "dunst" "alttab")
+
+
+for process in "${processes[@]}"; do
+  if pidof -q "$process"; then
+    pkill -9 -x "$process" > /dev/null; sleep 0.1
+  fi
+done
+
+# Load colors, dunst, bars and/or eww widgets
+#. $HOME/.config/bspwm/rice/Theme.sh
+#polybar -q bar &
+
+
+# Launch picom // If you have old hardware or encounter problems 
+# uncomment the picom "--legacy-backends" line and comment the current one.
+picom --config "$HOME"/.config/picom/picom.conf &
+#picom --legacy-backends --config "$HOME"/.config/bspwm/picom.conf &
+
+# Launch dunst notification daemon
+dunst -config "$HOME"/.config/dunst/dunstrc &
+
+# Set random wallpaper for actual rice
+feh -z --no-fehbg --bg-fill "$HOME"/Pictures/wallpaper
+
+# Reload sxhkd daemon
+sxhkd -c "$HOME"/.config/sxhkd/sxhkdrc &
+
+# Launch polkit
+pidof -q polkit-gnome-authentication-agent-1 || { /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & }
+
+# Fix cursor
+xsetroot -cursor_name left_ptr
+
+rm -rf ~/.config/QQ/crash_files
+
+for app in "${StartApps[@]}"; do
+    if !(pidof -q "$app"); then
+        "$app" &
+    fi
+done
+
+# Alt + Tab 
+alttab -fg "#d58681" -bg "#4a4a4a" -frame "#eb564d" -t 260x230 -i 260x100 -w 1 &
+
+eww open-many bar && bspc config top_padding 60
+
+~/.config/scripts/fullscreen &
+

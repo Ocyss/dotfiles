@@ -1,0 +1,3 @@
+polybar|error: Disabling module "power" (reason: Missing section "module/power")
+polybar|error: Disabling module "brightness" (reason: The file '/sys/class/backlight/intel_backlight/actual_brightness' does not exist)
+polybar|error: Failed to setup tray client removing... (XCB_WINDOW (3))

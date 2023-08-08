@@ -1,0 +1,74 @@
+[global]
+    monitor = 0
+    width =  (300,600)
+    height = 1400
+    origin = top-right
+    offset = 33x66
+    notification_limit = 0
+    progress_bar = true
+    progress_bar_height = 12
+    progress_bar_frame_width = 1
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+    word_wrap = false
+    indicate_hidden = yes
+    transparency = 0
+    separator_height = 5
+    padding = 15
+    horizontal_padding = 15
+    text_icon_padding = 0
+    frame_width = 3
+    frame_color = "#21202e"
+    separator_color = frame
+    sort = yes
+    font = Maple Mono NF 13
+    line_height = 4
+    markup = full
+    # default
+    #format = "<b>%a</b>: %s\n%b"
+    #format = "<span size='110%' font_desc='Maple Mono NF' weight='600'>%s</span>\n%b"
+    format = "<span size='x-large' font_desc='Cantarell 9' weight='bold' foreground='#79E6F3'>%s</span>\n%b"
+    alignment = center
+    vertical_alignment = center
+    show_age_threshold = 60
+    ellipsize = middle
+    stack_duplicates = true
+    hide_duplicate_count = false
+    icon_position = left
+    ignore_newline = no
+    show_indicators = no
+    max_icon_size = 96
+    sticky_history = yes
+    #history_length = 6
+    browser = /usr/bin/firefox -new-tab
+    always_run_script = true
+    title = Dunst
+    class = Dunst
+    corner_radius = 5
+    ignore_dbusclose = false
+    force_xwayland = false
+    force_xinerama = false
+    mouse_left_click = close_current
+    mouse_middle_click = do_action, close_current
+    mouse_right_click = close_all
+
+[experimental]
+    per_monitor_dpi = true
+
+[urgency_low]
+    background = "#191724"
+    foreground = "#ffffff"
+    timeout = 10
+
+[urgency_normal]
+    background = "#575294"
+    foreground = "#ffffff"
+    timeout = 10
+
+[urgency_critical]
+    background = "#eb6f92"
+    foreground = "#ffffff"
+    frame_color = "#eb4e92"
+    timeout = 0
+
+# vim: ft=cfg
