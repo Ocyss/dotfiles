@@ -8,10 +8,10 @@ __build_info:
     punctuation: 1654509031
     punctuation.custom: 0
     rime_ice.custom: 1691487738
-    rime_ice.schema: 1690789646
-    rime_ice_suggestion: 1690789646
+    rime_ice.schema: 1691566959
+    rime_ice_suggestion: 1691566959
     rime_ice_suggestion.custom: 0
-    symbols_v: 1690789646
+    symbols_v: 1691566959
     symbols_v.custom: 0
 custom_phrase:
   db_class: stabledb

@@ -6,10 +6,10 @@ __build_info:
     key_bindings: 1654509031
     key_bindings.custom: 0
     melt_eng.custom: 0
-    melt_eng.schema: 1690789646
+    melt_eng.schema: 1691566959
     punctuation: 1654509031
     punctuation.custom: 0
-    rime_ice_suggestion: 1690789646
+    rime_ice_suggestion: 1691566959
     rime_ice_suggestion.custom: 0
 algebra_abc:
   - "derive/1([4-7|9])/$1teen/"

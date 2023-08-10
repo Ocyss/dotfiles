@@ -12,7 +12,7 @@ bspc rule -a scratch sticky=on state=floating focus=on
 . SetSysVars
 
 # 直接启动项
-StartApps=("fcitx5" "qq" "wechat" "motrix" "telegram-desktop" "dingtalk" "feishu" "mailspring")
+StartApps=("fcitx5" "plank" "qq" "wechat" "motrix" "telegram-desktop" "dingtalk" "feishu" "mailspring")
 # 额外配置启动项
 processes=("picom" "polybar" "sxhkd" "dunst" "alttab")
 
@@ -60,6 +60,4 @@ done
 alttab -fg "#d58681" -bg "#4a4a4a" -frame "#eb564d" -t 260x230 -i 260x100 -w 1 &
 
 eww open-many bar && bspc config top_padding 60
-
-~/.config/scripts/fullscreen &
 
