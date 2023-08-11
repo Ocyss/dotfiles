@@ -2,7 +2,14 @@
 
 background "#1b1a27"
 #vertical true
-geometry 3x4-341+56
-grow_gravity NE
-icon_gravity NE
+geometry 1x1-570+16
+#max-geometry 7x1
+parent_bg true
+#dockapp_mode simple
+#sticky true
+#transparent true
+grow_gravity E # 向左增长
+icon_gravity E # 图标靠右
+window_type normal
+#window_layer top
 slot_size 32

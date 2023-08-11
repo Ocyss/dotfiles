@@ -1,0 +1,23 @@
+#! /bin/bash
+direction=$1
+
+current=$(hyprctl monitors -j | jq '.[] | select(.focused) | .activeWorkspace.id')
+
+if test "$direction" = "down"
+then
+	target=$(($current+1))
+	if test "$target" = 11; then
+		target=1
+	fi
+	echo "jumping to $target" 
+	hyprctl dispatch workspace $target
+
+elif test "$direction" = "up"
+then
+	target=$(($current-1))
+	if test "$target" = 0; then
+		target=10
+	fi
+	echo "jumping to $target"
+	hyprctl dispatch workspace $target
+fi

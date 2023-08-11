@@ -1,7 +1,7 @@
 (defpoll clock_time :interval "1s" "date +%H:%M:%S")
 (defpoll clock_date :interval "10h" "date '+%Y/%m/%d %A'")
 
-(defpoll volume_percent :interval "1m" "pamixer --get-volume-human | sed 's/%//'")
+(defpoll volume_percent :interval "1m" :initial "100" "pamixer --get-volume-human | sed 's/%//'")
 
 (defpoll memory :interval "15s" "scripts/memory")
 (defpoll memory_used_mb :interval "2m" "scripts/mem-ad used")
@@ -72,8 +72,7 @@
     (box :class "powermenu_botton" :vexpand: false :hexpand: false
       (button :onclick "eww open-many --toggle powermenu" ""))))
 
-(defwidget workspaces []
-  (literal :content workspace))
+
 
 
 (defwidget mem []

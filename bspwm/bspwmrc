@@ -58,9 +58,9 @@ bspc config pointer_action1               move
 bspc config pointer_action2               resize_side 
 bspc config pointer_action3               resize_corner
 # 边框宽度
-bspc config border_width			      2
+bspc config border_width			2
 # 窗口间隙
-bspc config window_gap					  8
+bspc config window_gap				8
 # 正常边框颜色
 bspc config normal_border_color           '#908caa'
 # 上下左右 填充大小

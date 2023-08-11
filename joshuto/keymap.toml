@@ -132,12 +132,14 @@ keymap = [
 	{ keys = [ "g", "e" ],		command = "cd /etc" },
 	{ keys = [ "g", "h" ],		command = "cd ~/" },
 	{ keys = [ "g", "i" ],		command = "cd ~/Ocyss" },
-	{ keys = [ "g", "f", "f" ],		command = "cd ~/.config" },
-	{ keys = [ "g", "f", "b" ],		command = "cd ~/.config/bspwm" },
-	{ keys = [ "g", "f", "s" ],		command = "cd ~/.config/sxhkd" },
-	{ keys = [ "g", "f", "j" ],		command = "cd ~/.config/joshuto" },
-	{ keys = [ "g", "f", "p" ],		command = "cd ~/.config/polybar" },
-	{ keys = [ "g", "f", "e" ],		command = "cd ~/.config/eww" },
+	{ keys = [ "g", "f", "f" ],		command = "cd ~/dotfiles" },
+	{ keys = [ "g", "f", "b" ],		command = "cd ~/dotfiles/bspwm" },
+	{ keys = [ "g", "f", "h" ],		command = "cd ~/dotfiles/hypr" },
+	{ keys = [ "g", "f", "s" ],		command = "cd ~/dotfiles/sxhkd" },
+	{ keys = [ "g", "f", "j" ],		command = "cd ~/dotfiles/joshuto" },
+	{ keys = [ "g", "f", "n" ],		command = "cd ~/dotfiles/npc" },
+	{ keys = [ "g", "f", "p" ],		command = "cd ~/dotfiles/picom" },
+	{ keys = [ "g", "f", "e" ],		command = "cd ~/dotfiles/eww" },
 	{ keys = [ "?" ],		command = "help" }
 ]
 

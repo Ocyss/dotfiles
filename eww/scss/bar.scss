@@ -54,11 +54,6 @@ tooltip label {
   margin: 0px 5px 0px 0px;
 }
 
-.membar {
-  color: #e0b089;
-  background-color: #38384d;
-  border-radius: 10px;
-}
 .volbar trough highlight {
   background-image: linear-gradient(
     to right,
@@ -111,10 +106,10 @@ tooltip label {
   margin: 0px 8px 0px 8px;
 }
 
-.mem_module {
-  background-color: rgba(27, 26, 39, 0.95);
-  border-radius: 16px;
-  margin: 0px 10px 0px 3px;
+.membar {
+  color: #e0b089;
+  background-color: rgba(27, 26, 39, 1);
+  border-radius: 25px;
 }
 
 scale trough {

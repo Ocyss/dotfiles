@@ -15,8 +15,6 @@ extension=$(/bin/echo "${path##*.}" | awk '{print tolower($0)}')
 
 case "$mimetype" in
     image/png | image/jpeg)
-
-        y=$(( $y + 2 ))
         show_image "$path" $x $y $width $height
         ;;
     *)

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Ocyss
+
+case "$1" in
+    --state)
+        local 
+    --volume)

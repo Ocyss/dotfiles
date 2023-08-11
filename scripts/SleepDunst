@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+
+function mail() {
+	for sec in `seq $1 -1 1`; do
+		dunstify -t 1300 --replace=699 -i  ~/.config/bspwm/assets/screenshot.svg "截图倒计时 : $sec"
+		sleep 1
+	done
+    dunstify --close=699
+    sleep 1
+}
+
+mail $1

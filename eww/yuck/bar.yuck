@@ -60,9 +60,12 @@
     :width "98%"
     :height "36px"
   :anchor "top center")
-  :stacking "bg"
-  :windowtype "normal"
-  :wm-ignore false
+  :monitor "0"
+  ; :stacking "bg"
+  ; :windowtype "normal"
+  ; :wm-ignore false
+  :stacking "fg"
+  :exclusive true
   (box :class "bar_class" :orientation "h"
     (left)
     (center)

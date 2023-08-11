@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+#  ╔═╗╔═╗╔═╗╔═╗  ╦  ╔═╗╦ ╦╔╗╔╔═╗╦ ╦╔═╗╦═╗
+#  ╠═╣╠═╝╠═╝╚═╗  ║  ╠═╣║ ║║║║║  ╠═╣║╣ ╠╦╝
+#  ╩ ╩╩  ╩  ╚═╝  ╩═╝╩ ╩╚═╝╝╚╝╚═╝╩ ╩╚═╝╩╚═
+#	Script to control apps launcher
+#   Author: z0mbi3
+#	url: https://github.com/gh0stzk
+
+# From here you can control your favorite applications for all themes.
+
+case "$1" in
+  --menu)
+    rofi  -modes "drun,window,run" -show drun -theme windows11-grid-dark;;
+
+  --rice)
+	RiceSelector;;
+
+  --terminal)
+    alacritty;;
+
+  --scratch)
+    WAYLAND_DISPLAY=no tdrop -a -w 70% -h 35% -y 0 -x 15%  --class scratch alacritty --class=scratch
+    ;;
+
+  --floating)
+    alacritty --class FloaTerm,Alacritty \
+					-o window.dimensions.lines=22 \
+					window.dimensions.columns=90;;
+
+  --update)
+    alacritty --hold --class FloaTerm,Alacritty \
+					-o window.dimensions.lines=22 \
+					   window.dimensions.columns=90 \
+					-e Updates --update-system;;
+
+  --checkupdates)
+	alacritty --hold --class Updating,Alacritty \
+					-o window.dimensions.lines=22 \
+					   window.dimensions.columns=47 \
+					-e Updates --print-updates;;
+
+  --jo)
+    alacritty --class FloaTerm,Alacritty \
+					-o window.dimensions.lines=28 \
+					   window.dimensions.columns=90 \
+					-e jo;;
+
+  --nvim)
+    alacritty -e nvim;;
+
+  --music)
+    alacritty --class FloaTerm,Alacritty \
+					-o window.dimensions.lines=38 \
+					   window.dimensions.columns=97 \
+					-e ncmpcpp;;
+
+  --fetch)
+    alacritty --hold --class FloaTerm,Alacritty \
+					-o window.dimensions.lines=26 \
+					   window.dimensions.columns=40 \
+					-e ~/.local/bin/sysfetch;;
+
+  #Apps
+  --filemanager)
+	alacritty -e jo;;
+
+  --browser)
+	microsoft-edge-dev;;
+
+  --editor)
+	geany;;
+
+  --telegram)
+	telegram;;
+
+  --whats)
+	whatsapp-nativefier --disable-gpu;;
+
+  --soundcontrol)
+    pavucontrol;;
+  
+  --files)
+    nautilus;;
+
+  --qq)
+    qq;;
+  
+  --code)
+    code;;
+
+  --mail)
+    mailspring;;
+  
+  --txt)
+    mousepad;; 
+  *)
+    echo "Opción no válida";;
+esac
