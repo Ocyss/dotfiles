@@ -1,6 +1,7 @@
 @import "bar/left.scss";
 
 .systray menu {
+  // z-index: 100;
   font-size: 21px;
   padding: 10px;
   background-color: rgba($color: #25019d, $alpha: 0.6);

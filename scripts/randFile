@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+path=$1
+echo "$path/$(/bin/ls $path | sort -R | head -n1)"
