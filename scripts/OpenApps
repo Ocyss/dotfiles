@@ -24,8 +24,8 @@ case "$1" in
 
   --floating)
     alacritty --class FloaTerm,Alacritty \
-					-o window.dimensions.lines=22 \
-					window.dimensions.columns=90;;
+					-o window.dimensions.lines=42 \
+					window.dimensions.columns=140;;
 
   --update)
     alacritty --hold --class FloaTerm,Alacritty \
@@ -65,7 +65,7 @@ case "$1" in
 	alacritty -e jo;;
 
   --browser)
-	microsoft-edge-dev;;
+	microsoft-edge-dev;;# --ozone-platform=wayland;;
 
   --editor)
 	geany;;

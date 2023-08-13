@@ -39,6 +39,12 @@
     :class "center_modules"
     (music)))
 
+(defwidget systrays []
+  (systray
+    :class "systray"
+    :packdirection "right"
+  ))
+
 
 (defwidget right []
   (box :orientation "h"
@@ -49,7 +55,8 @@
     (volume)
     (wifi)
     (sep)
-    (mem)
+    ; (mem)
+    (systrays)
     (sep)
     (clock_module)))
 

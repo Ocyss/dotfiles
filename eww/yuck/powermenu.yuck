@@ -120,6 +120,7 @@
       (powermenu-buttons))))
 
 (defwindow powermenu
+  :monitor "0"
   :stacking "fg"
   :wm-ignore true
   :windowtype "normal"
