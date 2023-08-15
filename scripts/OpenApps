@@ -65,7 +65,12 @@ case "$1" in
 	alacritty -e jo;;
 
   --browser)
-	microsoft-edge-dev;;# --ozone-platform=wayland;;
+	microsoft-edge-dev --flag-switches-begin \
+        --enable-features=VaapiVideoDecoder,VaapiVideoEncoder,VaapiIgnoreDriverChecks,Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,RawDraw,CanvasOopRasterization \
+        --ignore-gpu-blocklist \
+        --enable-gpu-rasterization \
+        --flag-switches-end;;
+  # --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime;;
 
   --editor)
 	geany;;

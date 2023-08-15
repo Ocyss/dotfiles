@@ -132,6 +132,7 @@ keymap = [
 	{ keys = [ "g", "e" ],		command = "cd /etc" },
 	{ keys = [ "g", "h" ],		command = "cd ~/" },
 	{ keys = [ "g", "i" ],		command = "cd ~/Ocyss" },
+	{ keys = [ "g", "p", "g" ],		command = "cd ~/Documents/go/src" },
 	{ keys = [ "g", "f", "f" ],		command = "cd ~/dotfiles" },
 	{ keys = [ "g", "f", "b" ],		command = "cd ~/dotfiles/bspwm" },
 	{ keys = [ "g", "f", "h" ],		command = "cd ~/dotfiles/hypr" },

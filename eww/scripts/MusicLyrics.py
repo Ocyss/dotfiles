@@ -178,14 +178,11 @@ class LrcParser:
 #     return '{0:{1}^{2}}'.format(string,fill,width)
 
 
-lyrics = ""
 
 
 def getLyrics():
-    global lyrics
+    lyrics = ""
     client = MPDClient()
-    client.timeout = 10
-    client.idletimeout = None
     client.connect("localhost", 6600)
     cur = None
     file = None
@@ -203,7 +200,8 @@ def getLyrics():
             t = float(status['elapsed'])
             while l < len(m) and m[l]['time'] < t:
                 l += 1
-            lyrics = "[{0}]".format(m[l-1]['lyric'])
+            if len(m[l-1]['lyric'])<20:
+                lyrics = "[{0}]".format(m[l-1]['lyric'])
         except BaseException as e:
             lyrics = e
         print(lyrics)
@@ -219,5 +217,4 @@ def quit(args, a):
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, quit)
     signal.signal(signal.SIGTERM, quit)
-
     getLyrics()

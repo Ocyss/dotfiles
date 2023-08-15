@@ -1,0 +1,11 @@
+#!/usr/bin/sh
+
+if [[ "$1" == "start" ]]; then
+    mpvpaper HDMI-A-1 "$HOME/Pictures/wallpaper/videos" -o "no-audio input-ipc-server=/tmp/mpvpaper-socket loop --shuffle" -f
+elif [[ "$1" == "stop" ]]; then
+	pkill -9 -x mpvpaper
+elif [[ "$1" == "pause" ]]; then
+    echo '{ "command": ["set_property", "pause", true] }' | socat - /tmp/mpvpaper-socket
+elif [[ "$1" == "play" ]]; then
+    echo '{ "command": ["set_property", "pause", false] }' | socat - /tmp/mpvpaper-socket
+fi

@@ -1,0 +1,16 @@
+#!/usr/bin/sh
+
+wallpaper(){
+    ACTIVE_WINDOW=$(hyprctl activewindow -j | jq .floating)
+    echo "是否浮动=$ACTIVE_WINDOW"
+    if [ $ACTIVE_WINDOW = "null" -o $ACTIVE_WINDOW = "true" ]; then
+        echo '{ "command": ["set_property", "pause", false] }' | socat - /tmp/mpvpaper-socket
+    else
+        echo '{ "command": ["set_property", "pause", true] }' | socat - /tmp/mpvpaper-socket
+    fi
+}
+
+wallpaper
+socat -u UNIX-CONNECT:/tmp/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock - | while read -r line; do
+    wallpaper
+done
