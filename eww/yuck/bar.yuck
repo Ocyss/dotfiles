@@ -21,61 +21,63 @@
 
 
 (defwidget left []
-  (box :orientation "h"
+  (box
+    :width "100%"
+    :hexpand true
     :space-evenly false
     :halign "start"
     (powermenu_botton)
     (sep)
     (workspaces)
     (sep)
+    (systrays)
+    (sep)
     (weather)
     (electricity)
   ))
 
 (defwidget center []
-  (box :orientation "h"
-    :space-evenly false
+  (box
+    :width "100%"
+    :hexpand true
     :halign "center"
-    :class "center_modules"
-    (music)))
-
-(defwidget systrays []
-  (systray
-    :class "systray"
-    :packdirection "right"
+    :space-evenly false
+    (music)
   ))
 
-
 (defwidget right []
-  (box :orientation "h"
-    :space-evenly false
+  (box
+    :width "100%"
+    :hexpand true
     :halign "end"
+    :space-evenly false
     (tray)
     (sep)
     (volume)
     (wifi)
     (sep)
-    ; (mem)
-    (systrays)
+    (cpu)
+    (temps)
+    (mem)
     (sep)
-    (clock_module)))
-
+    (clock_module)
+  ))
 
 (defwindow bar
   :geometry (geometry :x "0%"
     :y "7px"
-    :width "98%"
-    :height "36px"
+    :width "99.5%"
+    :height "45px"
   :anchor "top center")
   :monitor "0"
-  ; :windowtype "normal"
-  ; :wm-ignore false
   :stacking "fg"
   :exclusive true
   :namespace true
-  (box :class "bar_class" :orientation "h"
+  :windowtype "dock"
+  (box :class "bar_class" :space-evenly false
     (left)
     (center)
-    (right)))
+    (right)
+  ))
 
 

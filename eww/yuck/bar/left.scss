@@ -1,13 +1,16 @@
-.electricity,
-.weather {
-  margin: 0 8px;
-  font-size: 20px;
-}
-
-.weather {
-  font-family: qweather-icons, Maple Mono SC NF;
-}
-
-.electricity {
-  font-family: "JetBrainsMono,Font Awesome 6 Free Solid";
+.info {
+  margin: 0 6px;
+  .icon {
+    font-family: "JetBrainsMono", "Font Awesome 6 Free Solid",
+      "Maple Mono SC NF";
+    margin-right: 5px;
+    font-size: 20px;
+  }
+  .msg {
+    font-size: 18px;
+  }
+  .weather {
+    font-size: 23px;
+    font-family: "qweather-icons";
+  }
 }

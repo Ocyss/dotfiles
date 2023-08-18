@@ -1,0 +1,25 @@
+.system_module {
+  margin: 0 10px;
+  .icon {
+    font-family: "Font Awesome 6 Free";
+    margin-right: 5px;
+    font-size: 20px;
+  }
+  .val {
+    font-size: 14px;
+  }
+  .unit {
+    margin-left: 3px;
+  }
+  &.cpu .icon {
+    color: #ec407a;
+  }
+
+  &.mem .icon {
+    color: #fbc02d;
+  }
+
+  &.temps .icon {
+    color: #f03805;
+  }
+}

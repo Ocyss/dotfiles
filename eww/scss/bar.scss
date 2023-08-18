@@ -7,6 +7,7 @@
 .bar_class {
   background-color: rgba(27, 26, 39, 0.8);
   border-radius: 20px;
+  margin-bottom: 3px;
 }
 
 .module {
@@ -89,6 +90,10 @@ tooltip label {
 .wifi_icon {
   color: #7dc5a0;
 }
+.wifi_speed_up,
+.wifi_speed_down {
+  font-size: 13px;
+}
 .wifi_off_icon {
   color: #575268;
 }
@@ -106,10 +111,12 @@ tooltip label {
   margin: 0px 8px 0px 8px;
 }
 
-.membar {
-  color: #e0b089;
-  background-color: rgba(27, 26, 39, 1);
+.mecircular-progress {
+  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 25px;
+  &.mem {
+    color: #e5a775;
+  }
 }
 
 scale trough {

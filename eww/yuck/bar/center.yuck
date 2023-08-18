@@ -2,7 +2,7 @@
 (deflisten song  :initial "whatever" "python3 scripts/MusicLyrics.py")
 (defpoll song_status :interval "1s" "scripts/music_info --status")
 (defpoll cover_art :interval "1s"  "scripts/music_info --cover")
-(defpoll song_volume :interval "1m"  "mpc status | grep \"volume\" | awk \'{print $2}\'")
+; (defpoll song_volume :interval "1m"  "mpc status | grep \"volume\" | awk \'{print $2}\'")
 
 
 ;;  Music
@@ -21,7 +21,7 @@
           (button :class "song_btn_next" :onclick "scripts/music_info --next" "")
           (button :class "song_btn_dislike" :onclick "scripts/music_info --dislike" "🗑")
         ))
-      (label :text "${song_volume}")
+      ; (label :text "${song_volume}")
       (box :class "song_cover_art" :vexpand false :hexpand false :style "background-image: url('${cover_art}');")
-      (label :class "song" :wrap true :text song)
+      (label :class "song" :wrap true :text song :limit-width 20)
     )))

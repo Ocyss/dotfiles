@@ -1,20 +1,40 @@
 ; (deflisten workspace "scripts/workspaces")
-(defpoll weather_label :interval "8m" :initial "--°" "scripts/weather.py module")
-(defpoll electricity_label :interval "15m" :initial "--°" "scripts/electricity.py module")
+(defpoll weather_label :interval "8m"  "scripts/weather.py module")
+(defpoll electricity_label :interval "15m"  "scripts/electricity.py module")
 
 (defwidget weather []
-  (eventbox
-    :cursor "pointer" :onclick "scripts/weather.py click"
-    (label
-      :class "weather"
-    :text "${weather_label}")))
+  (eventbox :cursor "pointer"
+    :onclick "scripts/weather.py click"
+    (box
+      :class "info"
+      :space-evenly false
+      (label
+        :class "icon weather"
+        :style "color: ${weather_label.iconColor}"
+      :text "${weather_label.icon}")
+      (label
+        :class "msg"
+        :style "color: ${weather_label.msgColor}"
+        :text "${weather_label.msg}"
+      )
+    )))
 
 (defwidget electricity []
-  (eventbox
-    :cursor "pointer" :onclick "scripts/electricity.py click"
-    (label
-      :class "electricity"
-    :text "${electricity_label}")))
+  (eventbox :cursor "pointer"
+    :onclick "scripts/electricity.py click"
+    (box
+      :class "info electricity"
+      :space-evenly false
+      (label
+        :class "icon"
+        :style "color: ${electricity_label.iconColor}"
+      :text "${electricity_label.icon}")
+      (label
+        :class "msg"
+        :style "color: ${electricity_label.msgColor}"
+        :text "${electricity_label.msg}"
+      )
+    )))
 
 ; bspwm
 ; (defwidget workspaces []
@@ -34,3 +54,8 @@
     )
   )
 )
+(defwidget systrays []
+  (systray
+    :class "systray"
+    :packdirection "right"
+  ))

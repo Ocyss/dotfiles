@@ -178,8 +178,6 @@ class LrcParser:
 #     return '{0:{1}^{2}}'.format(string,fill,width)
 
 
-
-
 def getLyrics():
     lyrics = ""
     client = MPDClient()
@@ -200,14 +198,15 @@ def getLyrics():
             t = float(status['elapsed'])
             while l < len(m) and m[l]['time'] < t:
                 l += 1
-            if len(m[l-1]['lyric'])<20:
+            if len(m[l-1]['lyric']) < 20:
                 lyrics = "[{0}]".format(m[l-1]['lyric'])
         except BaseException as e:
-            lyrics = e
+            break
         print(lyrics)
         sys.stdout.flush()
-        os.system('eww update song_volume=%s%%' % status['volume'])
+        # os.system('eww update song_volume=%s%%' % status['volume'])
         time.sleep(0.4)
+    getLyrics()
 
 
 def quit(args, a):

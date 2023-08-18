@@ -3,15 +3,11 @@
 
 (defpoll volume_percent :interval "1m" :initial "100" "pamixer --get-volume-human | sed 's/%//'")
 
-(defpoll memory :interval "15s" "scripts/memory")
-(defpoll memory_used_mb :interval "2m" "scripts/mem-ad used")
-(defpoll memory_total_mb :interval "2m" "scripts/mem-ad total")
-(defpoll memory_free_mb :interval "2m" "scripts/mem-ad free")
-
 (deflisten wifi_connected "scripts/wifi -m")
-(deflisten wifi_speed  "scripts/wifi -ns")
 (defpoll calendar_day :interval "20h" "date '+%d'")
 (defpoll calendar_year :interval "20h" "date '+%Y'")
+
+(defpoll gpu_busy :interval "1s" :initial "0" "cat /sys/class/drm/card1/device/gpu_busy_percent")
 
 (defvar vol_reveal false)
 (defvar music_reveal false)
@@ -54,42 +50,60 @@
     :onhoverlost "eww update wifi_rev=false"
     :cursor "pointer"
     :tooltip ssid
-    (box :vexpand false :hexpand false :space-evenly false
+    (box :vexpand false :hexpand false :space-evenly false :valign "center"
       (button
         :class "${wifi_connected == "true" ? "wifi_icon" : "wifi_off_icon"}"
       :wrap false :limit-width 12 "${wifi_connected == "true" ? `` : ""}")
-      (label :class "wifi_speed" :text "${wifi_speed}")
-      ; (revealer :transition "slideright"
-        ;   :reveal wifi_rev
-        ;   :duration "350ms"
-        ;   (label :class "ssid_text"
-          ;     :text "${wifi_connected == "true" ? `${ssid}` : "无"}"
-        ;   :orientation "h"))
+      (box   :orientation "v" :space-evenly false :width 55 :valign "center"
+        (label :class "wifi_speed_up" :xalign "0"
+          :text `↑ ${round(EWW_NET['wlp6s0'].NET_UP / 1024,1) > 1024 ? "${round(EWW_NET['wlp6s0'].NET_UP / 1048576,1)}" : "${round(EWW_NET['wlp6s0'].NET_UP / 1024,1)}"}${round(EWW_NET['wlp6s0'].NET_UP / 1024,1) > 1024 ? "M" : "K"}`)
+        (label :class "wifi_speed_down" :xalign "0"
+          :text `↓ ${round(EWW_NET['wlp6s0'].NET_DOWN / 1024,1) > 1024 ? "${round(EWW_NET['wlp6s0'].NET_DOWN / 1048576,1)}" : "${round(EWW_NET['wlp6s0'].NET_DOWN / 1024,1)}"}${round(EWW_NET['wlp6s0'].NET_DOWN / 1024,1) > 1024 ? "M" : "K"}`))
     )))
 
+; EWW_NET['wlp6s0'].NET_DOWN
 (defwidget powermenu_botton []
   (eventbox :cursor "pointer"
     (box :class "powermenu_botton" :vexpand: false :hexpand: false
       (button :onclick "eww open-many --toggle powermenu" ""))))
 
-
-
-
 (defwidget mem []
-  (box :class "mem_module" :vexpand false :hexpand false
-    (circular-progress :value memory
-      :class "membar"
-      :thickness 4
-      (button
-        :class "iconmem"
-        :limit-width 2
-        :tooltip "using ${memory}% ram"
-        :onclick "eww open-many --toggle system"
-        :show_truncated false
-        :wrap false
-      ""))))
+  (box :class "system_module mem" :space-evenly false
+    (label :class "icon" :text "")
+    (box  :orientation "v" :space-evenly false :width 68 :valign "center"
+      (label :class "val" :xalign "0"  :text "mem:${round(EWW_RAM.used_mem/1024/1024/1024,1)}" :wrap true)
+      (label :class "val" :xalign "0"  :text "disk:${round(EWW_DISK['/'].used/1024/1024/1024,0)}")
+    )
+  )
+)
 
+(defwidget cpu []
+  (box :class "system_module cpu" :space-evenly false
+    (label :class "icon" :text "")
+    (box   :orientation "v" :space-evenly false :width 60 :valign "center" :halign "start"
+      (label :class "val" :xalign "0"  :text "CPU:${round(EWW_CPU.avg,0)}%" :wrap true)
+      (label :class "val" :xalign "0" :text "GPU:${gpu_busy}%" :wrap true)
+    )
+  )
+)
 
+; (defwidget gpu []
+  ;   (box :class "system_module gpu" :space-evenly false
+    ;     (label :class "icon" :text "")
+    ;     (label :class "val" :text "${gpu_busy}")
+    ;     (label :class "unit" :text "%")
+  ;   )
+; )
+
+(defwidget temps []
+  (box :class "system_module temps" :space-evenly false
+    (label :class "icon" :text "")
+    (box   :orientation "v" :space-evenly false :width 99 :valign "center" :halign "start"
+      (label :class "val" :text "CPU:${round(EWW_TEMPS.NCT6798_CPUTIN,1)}°C" :wrap true)
+      (label :class "val" :text "GPU:${round(EWW_TEMPS.AMDGPU_MEM,1)}°C" :wrap true)
+    )
+  )
+)
 
 (defwidget cal []
   (box :class "cal" :orientation "v"
@@ -101,53 +115,10 @@
 
 (defwindow calendar
   ; 日历
-  :geometry (geometry :x "-20px"
-    :y "7%"
+  :monitor "0"
+  :geometry (geometry :x "20px"
+    :y "1%"
     :anchor "top right"
     :width "270px"
   :height "60px")
   (cal))
-
-
-(defwidget system []
-  (box :class "sys_win" :orientation "v" :space-evenly false :hexpand false :vexpand false :spacing 0
-    (box :class "sys_box" :orientation "h" :space-evenly false
-      (box :orientation "v" :space-evenly false :spacing 0 :hexpand false :vexpand false))
-    (label :text "" :class "sys_sep" :halign "center")
-    (box :class "sys_mem_box" :orientation "h" :space-evenly false :halign "start"
-      (circular-progress :value memory
-        :class "sys_mem"
-        :thickness 9
-        (label :text ""
-          :class "sys_icon_mem"
-          :limit-width 2
-          :show_truncated false
-          :wrap false
-        :angle 0.0))
-      (box :orientation "v" :space-evenly false :spacing 0 :hexpand false :vexpand false
-        (label :text "memory"
-          :halign "start"
-          :class "sys_text_mem"
-          :limit-width 9
-          :show_truncated false
-        :wrap false)
-        (label :text "${memory_used_mb}|${memory_total_mb}mb "
-          :halign "start"
-          :class "sys_text_mem_sub"
-          :limit-width 22
-          :show_truncated false
-        :wrap false)
-        (label :text "${memory_free_mb}mb free"
-          :halign "start"
-          :class "sys_text_mem_sub"
-          :limit-width 22
-          :show_truncated false
-        :wrap false)))))
-
-(defwindow system
-  :geometry (geometry :x "-20px"
-    :y "7%"
-    :anchor "top right"
-    :width "290px"
-  :height "120px")
-  (system))

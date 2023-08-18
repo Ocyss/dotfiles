@@ -27,7 +27,7 @@ current_speed (){
             u_speed=$(((u_speed) / 1024))
             u_unit="MB/s"
         fi
-        echo "$d_speed$d_unit $u_speed$u_unit"
+        echo "[\"$d_speed$d_unit\",\"$u_speed$u_unit\"]"
     done
 }
 
@@ -54,12 +54,28 @@ monitor_net (){
     done
 }
 
-case "$@" in
+convert (){
+    d_speed=$(($1 / 1024))
+
+    d_unit="KB/s"
+
+    if [[ $d_speed -gt 1024 ]]; then
+        d_speed=$((d_speed / 1024))
+        d_unit="MB/s"
+    fi
+
+    echo "$d_speed$d_unit"
+}
+
+case "$1" in
     --monitor|-m)
         config_connection
         monitor_net
         ;;
     --speed|-ns)
         current_speed
+        ;;
+    --conv|-cv)
+        convert "$2"
         ;;
 esac
