@@ -4,14 +4,13 @@
 (defpoll cover_art :interval "1s"  "scripts/music_info --cover")
 ; (defpoll song_volume :interval "1m"  "mpc status | grep \"volume\" | awk \'{print $2}\'")
 
-
 ;;  Music
 (defwidget music []
   (eventbox :onhover "eww update music_reveal=true"
     :onhoverlost "eww update music_reveal=false"
     :cursor "pointer"
     :onclick "eww open-many --toggle player"
-    (box :class "module-2" :orientation "h" :space-evenly false :vexpand false :hexpand false
+    (box :class "music" :orientation "h" :space-evenly false :vexpand false :hexpand false
       (revealer :transition "slideright"
         :reveal music_reveal
         :duration "350ms"
@@ -20,8 +19,11 @@
           (button :class "song_btn_play" :onclick "scripts/music_info --toggle" song_status)
           (button :class "song_btn_next" :onclick "scripts/music_info --next" "")
           (button :class "song_btn_dislike" :onclick "scripts/music_info --dislike" "🗑")
-        ))
+        )
+      )
       ; (label :text "${song_volume}")
       (box :class "song_cover_art" :vexpand false :hexpand false :style "background-image: url('${cover_art}');")
-      (label :class "song" :wrap true :text song :limit-width 20)
-    )))
+      (label :class "song ${song_status=="󰐍" ? "song-pause" : "song-play"}" :wrap true :text song :limit-width 20)
+    )
+  )
+)

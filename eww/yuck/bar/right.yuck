@@ -1,11 +1,8 @@
-(defpoll clock_time :interval "1s" "date +%H:%M:%S")
-(defpoll clock_date :interval "10h" "date '+%Y/%m/%d %A'")
+(defpoll clock_time :interval "1s" `date +'{"H":"%H","M":"%M","S":"%S","Y":"%Y","m":"%m","d":"%d","A":"%A"}'`)
 
 (defpoll volume_percent :interval "1m" :initial "100" "pamixer --get-volume-human | sed 's/%//'")
 
 (deflisten wifi_connected "scripts/wifi -m")
-(defpoll calendar_day :interval "20h" "date '+%d'")
-(defpoll calendar_year :interval "20h" "date '+%Y'")
 
 (defpoll gpu_busy :interval "1s" :initial "0" "cat /sys/class/drm/card1/device/gpu_busy_percent")
 
@@ -16,20 +13,20 @@
 (defvar ssid "")
 (defvar tray_icon '')
 
-
-
 (defwidget tray []
   (eventbox
     :cursor "pointer" :onclick "scripts/toggle_tray"
     (label
       :class "tray_icon"
-    :text "${tray_icon}")))
+    :text "${tray_icon}")
+  )
+)
 
 (defwidget volume []
   (eventbox :onhover "eww update vol_reveal=true"
     :onhoverlost "eww update vol_reveal=false"
     :cursor "pointer"
-    (box :space-evenly false :orientation "h" :spacing "3"
+    (box :space-evenly false :orientation "h" :spacing "3" :class "volume"
       (button :onclick "pavucontrol &" :class "volume_icon" ``)
       (revealer :transition "slideleft"
         :reveal vol_reveal
@@ -40,9 +37,11 @@
           :tooltip "${volume_percent}%"
           :max 151
           :min 0
-        :onchange "pamixer --allow-boost --set-limit 150 --set-volume {} && ~/.config/scripts/volume_dunst && eww update volume_percent={}")))))
-
-
+        :onchange "pamixer --allow-boost --set-limit 150 --set-volume {} && ~/.config/scripts/volume_dunst && eww update volume_percent={}")
+      )
+    )
+  )
+)
 
 (defwidget wifi []
   (eventbox
@@ -50,29 +49,18 @@
     :onhoverlost "eww update wifi_rev=false"
     :cursor "pointer"
     :tooltip ssid
-    (box :vexpand false :hexpand false :space-evenly false :valign "center"
+    (box :vexpand false :hexpand false :space-evenly false :valign "center" :class "wifi"
       (button
         :class "${wifi_connected == "true" ? "wifi_icon" : "wifi_off_icon"}"
       :wrap false :limit-width 12 "${wifi_connected == "true" ? `` : ""}")
       (box   :orientation "v" :space-evenly false :width 55 :valign "center"
         (label :class "wifi_speed_up" :xalign "0"
-          :text `↑ ${round(EWW_NET['wlp6s0'].NET_UP / 1024,1) > 1024 ? "${round(EWW_NET['wlp6s0'].NET_UP / 1048576,1)}" : "${round(EWW_NET['wlp6s0'].NET_UP / 1024,1)}"}${round(EWW_NET['wlp6s0'].NET_UP / 1024,1) > 1024 ? "M" : "K"}`)
+          ; :text `↑ ${round(EWW_NET['wlp6s0'].NET_UP / 1024,1) > 1024 ? "${round(EWW_NET['wlp6s0'].NET_UP / 1048576,1)}" : "${round(EWW_NET['wlp6s0'].NET_UP / 1024,1)}"}${round(EWW_NET['wlp6s0'].NET_UP / 1024,1) > 1024 ? "M" : "K"}`)
+          :text `↑ ${round(EWW_NET['wlp6s0'].NET_UP / 2 / 1024,1) > 1024 ? "${round(EWW_NET['wlp6s0'].NET_UP / 2 / 1048576,1)}" : "${round(EWW_NET['wlp6s0'].NET_UP / 2 / 1024,1)}"}${round(EWW_NET['wlp6s0'].NET_UP / 2 / 1024,1) > 1024 ? "M" : "K"}`)
         (label :class "wifi_speed_down" :xalign "0"
-          :text `↓ ${round(EWW_NET['wlp6s0'].NET_DOWN / 1024,1) > 1024 ? "${round(EWW_NET['wlp6s0'].NET_DOWN / 1048576,1)}" : "${round(EWW_NET['wlp6s0'].NET_DOWN / 1024,1)}"}${round(EWW_NET['wlp6s0'].NET_DOWN / 1024,1) > 1024 ? "M" : "K"}`))
-    )))
-
-; EWW_NET['wlp6s0'].NET_DOWN
-(defwidget powermenu_botton []
-  (eventbox :cursor "pointer"
-    (box :class "powermenu_botton" :vexpand: false :hexpand: false
-      (button :onclick "eww open-many --toggle powermenu" ""))))
-
-(defwidget mem []
-  (box :class "system_module mem" :space-evenly false
-    (label :class "icon" :text "")
-    (box  :orientation "v" :space-evenly false :width 68 :valign "center"
-      (label :class "val" :xalign "0"  :text "mem:${round(EWW_RAM.used_mem/1024/1024/1024,1)}" :wrap true)
-      (label :class "val" :xalign "0"  :text "disk:${round(EWW_DISK['/'].used/1024/1024/1024,0)}")
+          ; :text `↓ ${round(EWW_NET['wlp6s0'].NET_DOWN / 1024,1) > 1024 ? "${round(EWW_NET['wlp6s0'].NET_DOWN / 1048576,1)}" : "${round(EWW_NET['wlp6s0'].NET_DOWN / 1024,1)}"}${round(EWW_NET['wlp6s0'].NET_DOWN / 1024,1) > 1024 ? "M" : "K"}`)
+          :text `↓ ${round(EWW_NET['wlp6s0'].NET_DOWN / 2 / 1024,1) > 1024 ? "${round(EWW_NET['wlp6s0'].NET_DOWN / 2 / 1048576,1)}" : "${round(EWW_NET['wlp6s0'].NET_DOWN / 2 / 1024,1)}"}${round(EWW_NET['wlp6s0'].NET_DOWN / 2 / 1024,1) > 1024 ? "M" : "K"}`)
+      )
     )
   )
 )
@@ -105,13 +93,35 @@
   )
 )
 
-(defwidget cal []
-  (box :class "cal" :orientation "v"
-    (box :class "cal-in"
-      (calendar :class "cal"
-        :day calendar_day
-      :year calendar_year))))
+(defwidget mem []
+  (box :class "system_module mem" :space-evenly false
+    (label :class "icon" :text "")
+    (box  :orientation "v" :space-evenly false :width 68 :valign "center"
+      (label :class "val" :xalign "0"  :text "mem:${round(EWW_RAM.used_mem/1024/1024/1024,1)}" :wrap true)
+      (label :class "val" :xalign "0"  :text "disk:${round(EWW_DISK['/'].used/1024/1024/1024,0)}")
+    )
+  )
+)
 
+(defwidget clock_module []
+  (eventbox :onhover "eww update time_rev=true"
+    :onhoverlost "eww update time_rev=false"
+    :cursor "pointer"
+    (box :class "clock" :space-evenly false :orientation "h" :spacing "3"
+      (label :text "${clock_time.H}" :class "clock_time_class")
+      (label :text "󰇙" :class "clock_time_sep")
+      (label :text "${clock_time.M}" :class "clock_time_class")
+      (label :text "󰇙" :class "clock_time_sep")
+      (label :text "${clock_time.S}" :class "clock_time_class")
+      (revealer :transition "slideleft"
+        :reveal time_rev
+        :duration "350ms"
+        (button :class "clock_date_class"
+        :onclick "eww open-many --toggle calendar" "${clock_time.Y}/${clock_time.m}/${clock_time.d} ${clock_time.A}")
+      )
+    )
+  )
+)
 
 (defwindow calendar
   ; 日历
@@ -121,4 +131,11 @@
     :anchor "top right"
     :width "270px"
   :height "60px")
-  (cal))
+  (box :class "cal" :orientation "v"
+    (box :class "cal-in"
+      (calendar :class "cal"
+        :day "${clock_time.d}"
+      :year "${clock_time.Y}")
+    )
+  )
+)

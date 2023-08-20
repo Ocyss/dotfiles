@@ -1,0 +1,32 @@
+.music {
+  .song_cover_art {
+    background-size: cover;
+    background-position: center;
+    min-height: 24px;
+    min-width: 24px;
+    margin: 10px;
+    border-radius: 100px;
+  }
+
+  .song {
+    color: #cecacd;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 3px 5px 0px 0px;
+  }
+  .song-pause {
+    color: #fecf25;
+  }
+  .song_btn_play {
+    color: #dfdad9;
+    font-size: 32px;
+    margin: 3px 0px 0px 5px;
+  }
+
+  .song_btn_prev,
+  .song_btn_next {
+    color: #f4ede8;
+    font-size: 24px;
+    margin: 3px 0px 0px 5px;
+  }
+}

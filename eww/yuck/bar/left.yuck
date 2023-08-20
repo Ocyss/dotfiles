@@ -1,6 +1,40 @@
 ; (deflisten workspace "scripts/workspaces")
 (defpoll weather_label :interval "8m"  "scripts/weather.py module")
 (defpoll electricity_label :interval "15m"  "scripts/electricity.py module")
+(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/workspaces")
+
+(defwidget powermenu_botton []
+  (eventbox :cursor "pointer"
+    (box :class "powermenu_botton" :vexpand: false :hexpand: false
+      (button :onclick "eww open-many --toggle powermenu" "")
+    )
+  )
+)
+
+; bspwm
+; (defwidget workspaces []
+  ;   (literal :content workspace)
+; )
+
+(defwidget workspaces []
+  (eventbox :onscroll "bash ~/.config/eww/scripts/workspaces-change {}" :class "workspaces-widget"
+    (box :space-evenly true :class "works"
+      (for workspace in workspaces
+        (button
+          :onclick "hyprctl dispatch workspace ${workspace.id}"
+          :class `workspace ${workspace.state == 2 ? "on" : workspace.state == 1 ? "off" : ""}`
+        `${workspace.state == 2 ? "󰮯" : workspace.state == 1 ? "󰊠" : "󰑊"}`)
+      )
+    )
+  )
+)
+
+(defwidget systrays []
+  (systray
+    :class "systray"
+    :packdirection "right"
+  )
+)
 
 (defwidget weather []
   (eventbox :cursor "pointer"
@@ -17,7 +51,9 @@
         :style "color: ${weather_label.msgColor}"
         :text "${weather_label.msg}"
       )
-    )))
+    )
+  )
+)
 
 (defwidget electricity []
   (eventbox :cursor "pointer"
@@ -34,28 +70,6 @@
         :style "color: ${electricity_label.msgColor}"
         :text "${electricity_label.msg}"
       )
-    )))
-
-; bspwm
-; (defwidget workspaces []
-  ;   (literal :content workspace))
-
-(deflisten workspaces :initial "[]" "bash ~/.config/eww/scripts/workspaces-hyprland")
-
-(defwidget workspaces []
-  (eventbox :onscroll "bash ~/.config/eww/scripts/change-active-workspace {}" :class "workspaces-widget"
-    (box :space-evenly true :class "works"
-      (for workspace in workspaces
-        (button
-          :onclick "hyprctl dispatch workspace ${workspace.id}"
-          :class `workspace ${workspace.state == 2 ? "on" : workspace.state == 1 ? "off" : ""}`
-        `${workspace.state == 2 ? "󰮯" : workspace.state == 1 ? "󰊠" : "󰑊"}`)
-      )
     )
   )
 )
-(defwidget systrays []
-  (systray
-    :class "systray"
-    :packdirection "right"
-  ))

@@ -1,0 +1,52 @@
+// 关机菜单
+.powermenu_botton {
+  color: #eb6f92;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 2px 0px 0px 25px;
+}
+
+// 工作区
+.works {
+  font-size: 27px;
+  font-weight: normal;
+  margin: 5px 0px 0px 5px;
+  .workspace {
+    margin: 0px 2px;
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .off {
+    color: #7aa2f7;
+  }
+  .on {
+    color: #f6e377;
+  }
+}
+
+// 系统托盘
+.systray menuitem {
+  margin: 0 3px;
+  menu {
+    font-size: 21px;
+    padding: 10px;
+    background-color: rgba($color: #25019d, $alpha: 0.6);
+  }
+}
+
+// 日用信息
+.info {
+  margin: 0 6px;
+  .icon {
+    font-family: "JetBrainsMono", "Font Awesome 6 Free Solid",
+      "Maple Mono SC NF";
+    margin-right: 5px;
+    font-size: 20px;
+  }
+  .msg {
+    font-size: 18px;
+  }
+  .weather {
+    font-size: 23px;
+    font-family: "qweather-icons";
+  }
+}

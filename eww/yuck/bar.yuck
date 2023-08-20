@@ -5,20 +5,9 @@
 
 (defwidget sep []
   (box :class "module-2" :vexpand false :hexpand false
-    (label :class "separ" :text "|")))
-
-(defwidget clock_module []
-  (eventbox :onhover "eww update time_rev=true"
-    :onhoverlost "eww update time_rev=false"
-    :cursor "pointer"
-    (box :class "module" :space-evenly false :orientation "h" :spacing "3"
-      (label :text clock_time :class "clock_minute_class")
-      (revealer :transition "slideleft"
-        :reveal time_rev
-        :duration "350ms"
-        (button :class "clock_date_class"
-        :onclick "eww open-many --toggle calendar" clock_date)))))
-
+    (label :class "separ" :text "|")
+  )
+)
 
 (defwidget left []
   (box
@@ -34,7 +23,8 @@
     (sep)
     (weather)
     (electricity)
-  ))
+  )
+)
 
 (defwidget center []
   (box
@@ -43,7 +33,8 @@
     :halign "center"
     :space-evenly false
     (music)
-  ))
+  )
+)
 
 (defwidget right []
   (box
@@ -61,7 +52,8 @@
     (mem)
     (sep)
     (clock_module)
-  ))
+  )
+)
 
 (defwindow bar
   :geometry (geometry :x "0%"
@@ -78,6 +70,5 @@
     (left)
     (center)
     (right)
-  ))
-
-
+  )
+)

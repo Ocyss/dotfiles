@@ -8,11 +8,11 @@ import tempfile
 
 if len(sys.argv) > 1 and sys.argv[1] == '--subproc':
     ramp_list = ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█']
-    #ramp_list.extend(
+    # ramp_list.extend(
     #    f'%{{F#79E6F3}}█%{{F-}}'
-        #for color in sys.argv[2].split(',')
-        #if color
-    #)
+    # for color in sys.argv[2].split(',')
+    # if color
+    # )
     while True:
         cava_input = input().strip().split()
         cava_input = [int(i) for i in cava_input]
@@ -25,7 +25,6 @@ if len(sys.argv) > 1 and sys.argv[1] == '--subproc':
                 output += ramp_list[-1]
 
         print('%{F#79E6F3}'+output+'%{F-}')
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--framerate', type=int, default=60,
@@ -42,33 +41,36 @@ conf_channels = ''
 if opts.channels != 'stereo':
     conf_channels = (
         'channels=mono\n'
-       f'mono_option={opts.channels}'
+        f'mono_option={opts.channels}'
     )
 
 conf_ascii_max_range = 12 + len([i for i in opts.extra_colors.split(',') if i])
 
-cava_conf = tempfile.mkstemp('','polybar-cava-conf.')[1]
+cava_conf = tempfile.mkstemp('', 'polybar-cava-conf.')[1]
 with open(cava_conf, 'w') as cava_conf_file:
     cava_conf_file.write(
         '[general]\n'
-       f'framerate={opts.framerate}\n'
-       f'bars={opts.bars}\n'
+        f'framerate={opts.framerate}\n'
+        f'bars={opts.bars}\n'
         '[output]\n'
         'method=raw\n'
         'data_format=ascii\n'
-       f'ascii_max_range={conf_ascii_max_range}\n'
+        f'ascii_max_range={conf_ascii_max_range}\n'
         'bar_delimiter=32\n'
         + conf_channels
     )
 
 cava_proc = subprocess.Popen(['cava', '-p', cava_conf], stdout=subprocess.PIPE)
-self_proc = subprocess.Popen(['python3', __file__, '--subproc', opts.extra_colors], stdin=cava_proc.stdout)
+self_proc = subprocess.Popen(
+    ['python3', __file__, '--subproc', opts.extra_colors], stdin=cava_proc.stdout)
+
 
 def cleanup(sig, frame):
     os.remove(cava_conf)
     cava_proc.kill()
     self_proc.kill()
     sys.exit(0)
+
 
 signal.signal(signal.SIGTERM, cleanup)
 signal.signal(signal.SIGINT,  cleanup)

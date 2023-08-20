@@ -1,0 +1,138 @@
+.tray_icon {
+  font-size: 22;
+  color: rgba(#a1bdce, 0.85);
+  margin: 0px 10px 0px 10px;
+}
+
+// 系统信息
+.system_module {
+  margin: 0 10px;
+  .icon {
+    font-family: "Font Awesome 6 Free";
+    margin-right: 5px;
+    font-size: 20px;
+  }
+  .val {
+    font-size: 14px;
+  }
+  .unit {
+    margin-left: 3px;
+  }
+  &.cpu .icon {
+    color: #ec407a;
+  }
+
+  &.mem .icon {
+    color: #fbc02d;
+  }
+
+  &.temps .icon {
+    color: #f03805;
+  }
+}
+
+// 时钟
+.clock {
+  .clock_time_sep {
+    font-size: 17;
+    color: #bfc9db;
+    margin: 0px 4px 1px 4px;
+  }
+
+  .clock_time_class {
+    font-size: 23;
+    color: #bfc9db;
+    font-weight: bold;
+    margin: 0px 5px 0px 0px;
+  }
+
+  .clock_date_class {
+    font-size: 18;
+    margin: 0px 20px 0px -1px;
+    color: #d7beda;
+  }
+}
+
+// 音量
+.volume {
+  .volume_icon {
+    font-size: 22;
+    color: #c4a7e7;
+    margin: 0px 10px 0px 10px;
+  }
+
+  .volbar trough highlight {
+    background-image: linear-gradient(
+      to right,
+      #c4a7e7 30%,
+      #c4a7e7 50%,
+      #907aa9 100% * 50
+    );
+    border-radius: 10px;
+  }
+}
+
+.wifi {
+  .wifi_icon,
+  .wifi_off_icon {
+    font-size: 22;
+    border-radius: 100%;
+    margin: 0px 10px 0px 5px;
+  }
+  .wifi_icon {
+    color: #7dc5a0;
+  }
+  .wifi_speed_up,
+  .wifi_speed_down {
+    font-size: 13px;
+  }
+  .wifi_off_icon {
+    color: #575268;
+  }
+}
+
+.cal {
+  background-color: rgba(27, 26, 39, 0.95);
+  font-family: Maple Mono SC NF;
+  font-size: 18px;
+  font-weight: normal;
+
+  .cal-in {
+    padding: 0px 10px 0px 10px;
+    color: #bfc9db;
+
+    .cal {
+      &.highlight {
+        padding: 20px;
+      }
+
+      padding: 5px 5px 5px 5px;
+      margin-left: 10px;
+    }
+  }
+
+  calender {
+    color: #bfc9db;
+  }
+  calendar:selected {
+    color: #7aa2f7;
+  }
+
+  calendar.header {
+    color: #a1bdce;
+    font-weight: bold;
+  }
+
+  calendar.button {
+    color: #afbea2;
+  }
+
+  calendar.highlight {
+    color: #a1bdce;
+    font-weight: bold;
+  }
+
+  calendar:indeterminate {
+    color: #bfc9db;
+  }
+}

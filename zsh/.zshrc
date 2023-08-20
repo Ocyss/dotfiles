@@ -62,6 +62,7 @@ SAVEHIST=5000
 #  ┌─┘└─┐├─┤  │  │ ││ ││    │ │├─┘ │ ││ ││││└─┐
 #  └─┘└─┘┴ ┴  └─┘└─┘└─┘┴─┘  └─┘┴   ┴ ┴└─┘┘└┘└─┘
 #setopt AUTOCD              # change directory just by typing its name
+setopt no_nomatch
 setopt PROMPT_SUBST        # enable command substitution in prompt
 setopt MENU_COMPLETE       # Automatically highlight first element of completion menu
 setopt LIST_PACKED		   # The completion menu takes less space.

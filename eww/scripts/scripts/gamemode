@@ -1,9 +1,0 @@
-#!/bin/bash
-
-STATUS=$(gamemoded -s)
-
-if [[ $STATUS == "gamemode is active" ]]; then
-    echo ""
-else
-    echo ""
-fi
