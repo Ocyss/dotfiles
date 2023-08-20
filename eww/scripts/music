@@ -1,0 +1,40 @@
+#!/bin/sh
+# scripts by Ocyss
+
+MUSIC_DIR="$HOME/Music"
+COVER="/tmp/cover.png"
+
+get_song() {
+	song=`mpc -f %title% current`
+	if [[ -z "$song" ]]; then
+		echo "Offline"
+	else
+		echo "$song"
+	fi
+}
+
+get_cover() {
+	ffmpeg -i "${MUSIC_DIR}/$(mpc current -f %file%)" "${COVER}" -y &> /dev/null
+	STATUS=$?
+	# Check if the file has a embbeded album art
+	if [ "$STATUS" -eq 0 ];then
+		echo "$COVER"
+	else
+		echo "images/music.png"
+	fi
+}
+
+update(){
+    state=$(mpc status)
+    play=false
+    if [[ $state == *"[playing]"* ]]; then
+		play=true
+	fi
+    info=$(mpc -f \"title\":\"%title%\",\"artist\":\"%artist%\" current)
+    echo "{\"play\":$play,\"cover\":\"$(get_cover)\",$info}"
+}
+
+update
+mpc idleloop | while read -r line; do
+    update
+done
