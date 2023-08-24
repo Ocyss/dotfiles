@@ -14,7 +14,7 @@ option.smartindent = true
 option.number = true
 option.relativenumber = true
 option.wildmenu = true
-option.hlsearch = true
+option.hlsearch = false
 option.ignorecase = true
 option.smartcase = true
 option.completeopt = { "menuone", "noselect" }
@@ -47,7 +47,7 @@ vim.keymap.set({ "n", "i", "v" }, "<Right>", "<Nop>")
 vim.keymap.set({ "n", "i", "v" }, "<Up>", "<Nop>")
 vim.keymap.set({ "n", "i", "v" }, "<Down>", "<Nop>")
 
-vim.keymap.set("n", "<A-Tab>", "<cmd>bNext<CR>") 
+vim.keymap.set("n", "<c-Tab>", "<cmd>bNext<CR>") 
 vim.keymap.set("n", "<leader>bc", "<cmd>bd<CR>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")

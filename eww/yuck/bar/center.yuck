@@ -1,7 +1,7 @@
-(defpoll song_title :interval "1s"  "scripts/music_info --song")
 (deflisten song  :initial "whatever" "python3 scripts/MusicLyrics.py")
-(defpoll song_status :interval "1s" "scripts/music_info --status")
-(defpoll cover_art :interval "1s"  "scripts/music_info --cover")
+(deflisten song_status :initial '{"play":false,"cover":"images/music.png","title":"Offline","artist":"Ocyss"}' "scripts/music")
+(defvar music_reveal false)
+
 ; (defpoll song_volume :interval "1m"  "mpc status | grep \"volume\" | awk \'{print $2}\'")
 
 ;;  Music
@@ -10,20 +10,20 @@
     :onhoverlost "eww update music_reveal=false"
     :cursor "pointer"
     :onclick "eww open-many --toggle player"
-    (box :class "music" :orientation "h" :space-evenly false :vexpand false :hexpand false
-      (revealer :transition "slideright"
+    (box :class "music" :orientation "h" :space-evenly false
+      ; (label :text "${song_volume}")
+      (box :class "song_cover_art" :style "background-image: url('${song_status.cover}');")
+      (label :visible "${!music_reveal}" :class "song ${song_status.play ? "song-play" : "song-pause"}" :wrap true :text song :limit-width 20)
+      (revealer :transition "none"
         :reveal music_reveal
-        :duration "350ms"
-        (box :vexpand false :hexpand false :oreintation "h"
+        (box  :oreintation "h" :space-evenly false
+          (label  :class "song_title" :text "${song_status.title} - ${song_status.artist}")
           (button :class "song_btn_prev" :onclick "scripts/music_info --prev" "")
-          (button :class "song_btn_play" :onclick "scripts/music_info --toggle" song_status)
+          (button :class "song_btn_play" :onclick "scripts/music_info --toggle" "${song_status.play ? "󰏦" : "󰐍"}")
           (button :class "song_btn_next" :onclick "scripts/music_info --next" "")
-          (button :class "song_btn_dislike" :onclick "scripts/music_info --dislike" "🗑")
+          (button :class "song_btn_dislike" :onclick "scripts/music_info --dislike" "")
         )
       )
-      ; (label :text "${song_volume}")
-      (box :class "song_cover_art" :vexpand false :hexpand false :style "background-image: url('${cover_art}');")
-      (label :class "song ${song_status=="󰐍" ? "song-pause" : "song-play"}" :wrap true :text song :limit-width 20)
     )
   )
 )

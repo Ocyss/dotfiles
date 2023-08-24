@@ -7,7 +7,6 @@
 (defpoll gpu_busy :interval "1s" :initial "0" "cat /sys/class/drm/card1/device/gpu_busy_percent")
 
 (defvar vol_reveal false)
-(defvar music_reveal false)
 (defvar wifi_rev false)
 (defvar time_rev false)
 (defvar ssid "")
@@ -117,7 +116,7 @@
         :reveal time_rev
         :duration "350ms"
         (button :class "clock_date_class"
-        :onclick "eww open-many --toggle calendar" "${clock_time.Y}/${clock_time.m}/${clock_time.d} ${clock_time.A}")
+        :onclick "eww open --toggle calendar" "${clock_time.Y}/${clock_time.m}/${clock_time.d} ${clock_time.A}")
       )
     )
   )

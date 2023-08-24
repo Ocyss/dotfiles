@@ -6,7 +6,7 @@
 #  └┐┌┘├─┤├┬┘└─┐
 #   └┘ ┴ ┴┴└─└─┘
 export VISUAL='mousepad'
-export EDITOR='vim'
+export EDITOR='nvim'
 export TERMINAL='alacritty'
 export BROWSER='microsoft-edge-dev'
 export HISTORY_IGNORE="(ls|ll|cd|pwd|exit|sudo reboot|history|cd -|cd ..|cd ~)"

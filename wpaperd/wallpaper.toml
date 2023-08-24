@@ -1,0 +1,6 @@
+[default]
+path = "/home/ocyss/Pictures/wallpaper"
+duration = "30m"
+sorting = "random"
+apply-shadow = false
+
