@@ -1,12 +1,14 @@
 (defpoll clock_time :interval "1s" `date +'{"H":"%H","M":"%M","S":"%S","Y":"%Y","m":"%m","d":"%d","A":"%A"}'`)
 
-(defpoll volume_percent :interval "1m" :initial "100" "pamixer --get-volume-human | sed 's/%//'")
+(defpoll volume_percent :interval "1m" :initial "50" "pamixer --get-volume-human | sed 's/%//'")
+(defpoll lightbulb_percent :interval "1m" :initial "50" "ddcutil getvcp 10 | grep -oP 'current value = \s+\K\d+'")
 
 (deflisten wifi_connected "scripts/wifi -m")
 
 (defpoll gpu_busy :interval "1s" :initial "0" "cat /sys/class/drm/card1/device/gpu_busy_percent")
 
 (defvar vol_reveal false)
+(defvar lig_reveal false)
 (defvar wifi_rev false)
 (defvar time_rev false)
 (defvar ssid "")
@@ -37,6 +39,29 @@
           :max 151
           :min 0
         :onchange "pamixer --allow-boost --set-limit 150 --set-volume {} && ~/.config/scripts/volume_dunst && eww update volume_percent={}")
+      )
+    )
+  )
+)
+
+
+(defwidget lightbulb []
+  (eventbox :onhover "eww update lig_reveal=true"
+    :onhoverlost "eww update lig_reveal=false"
+    :cursor "pointer"
+    (box :space-evenly false :orientation "h" :spacing "3" :class "lightbulb"
+      (button :onclick "" :class "lightbulb_icon" `󱩓`)
+      (revealer :transition "slideleft"
+        :reveal lig_reveal
+        :duration "350ms"
+        (scale :class "volbar"
+          :value lightbulb_percent
+          :orientation "h"
+          :tooltip "${lightbulb_percent}%"
+          :max 101
+          :min 0
+          :timeout 1000
+        :onchange "ddcutil --bus 5 --sleep-multiplier  0.04 setvcp 10 {}")
       )
     )
   )

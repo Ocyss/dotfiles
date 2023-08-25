@@ -72,6 +72,25 @@
   }
 }
 
+// 亮度
+.lightbulb {
+  .lightbulb_icon {
+    font-size: 32;
+    color: #fbc02d;
+    margin: 0px 15px 0px 10px;
+  }
+
+  .volbar trough highlight {
+    background-image: linear-gradient(
+      to right,
+      #fbc02d 30%,
+      #fbc02d 50%,
+      #fbd816 100% * 50
+    );
+    border-radius: 10px;
+  }
+}
+
 .wifi {
   .wifi_icon,
   .wifi_off_icon {
