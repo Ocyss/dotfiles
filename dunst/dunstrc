@@ -5,6 +5,7 @@
     origin = top-right
     offset = 33x66
     notification_limit = 0
+    enable_posix_regex = true
     progress_bar = true
     progress_bar_height = 12
     progress_bar_frame_width = 1
@@ -36,11 +37,11 @@
     hide_duplicate_count = false
     icon_position = left
     ignore_newline = no
-    show_indicators = no
+    show_indicators = true
     max_icon_size = 96
     sticky_history = yes
     #history_length = 6
-    browser = /usr/bin/firefox -new-tab
+    browser = /usr/bin/microsoft-edge-dev
     always_run_script = true
     title = Dunst
     class = Dunst
@@ -63,7 +64,7 @@
 [urgency_normal]
     background = "#24273A"
     foreground = "#CAD3F5"
-    timeout = 10
+    timeout = 20
 
 [urgency_critical]
     background = "#24273A"

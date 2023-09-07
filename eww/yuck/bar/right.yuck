@@ -1,7 +1,7 @@
 (defpoll clock_time :interval "1s" `date +'{"H":"%H","M":"%M","S":"%S","Y":"%Y","m":"%m","d":"%d","A":"%A"}'`)
 
 (defpoll volume_percent :interval "1m" :initial "50" "pamixer --get-volume-human | sed 's/%//'")
-(defpoll lightbulb_percent :interval "1m" :initial "50" "ddcutil getvcp 10 | grep -oP 'current value = \s+\K\d+'")
+(defpoll lightbulb_percent :interval "1m" :initial "50" "sleep 1 && ddcutil getvcp 10 | grep -oP 'current value = \s+\K\d+'")
 
 (deflisten wifi_connected "scripts/wifi -m")
 
@@ -61,7 +61,7 @@
           :max 101
           :min 0
           :timeout 1000
-        :onchange "ddcutil --bus 5 --sleep-multiplier  0.04 setvcp 10 {}")
+        :onchange "ddcutil --bus 5 --sleep-multiplier 0.1 setvcp 10 {}")
       )
     )
   )

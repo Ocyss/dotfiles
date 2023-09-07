@@ -1,3 +1,5 @@
 max	"func max(a,b int)int{if a>b{return a};return b}"
 min	"func min(a,b int)int{if a<b{return a};return b}"
 abs	"func abs(a int)int{if a<0{return -a};return a}"
+minof "func minOf(a []int)int{r:=a[0];for _,v:=range a{if v<r{r=v}};return r}"
+maxof "func maxOf(a []int)int{r:=a[0];for _,v:=range a{if v>r{r=v}};return r}"

@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+## By Ocyss
+
+
+COVER="/tmp/cover.png"
+# mpd music directory
+MUSIC_DIR="$HOME/Music"
+# if cover not found in metadata use this instead
+BACKUP_COVER="~/.config/eww/images/music.png"
+ICON="$HOME/.config/dunst/icons/music-volume.svg"
+
+get_cover() {
+	ffmpeg -i "${MUSIC_DIR}"/"$(mpc current -f %file%)" "${COVER}" -y &> /dev/null
+	STATUS=$?
+	# Check if the file has a embbeded album art
+	if [ "$STATUS" -eq 0 ];then
+		status="`mpc status`"
+        if [[ ${status} == *"[playing]"* ]]; then
+            dunstify -a music --replace=27072 -t 2000 -i $COVER  "$1"   "$(mpc --format '%title%-%artist%' current)"
+        else
+            dunstify -a music --replace=27072 -t 2000 -i $COVER  "暂停" "$(mpc --format '%title%-%artist%' current)"
+        fi
+	fi
+}
+
+
+case $1 in
+    toggle)
+        mpc toggle
+        get_cover 播放
+        ;;
+    prev)
+        mpc prev
+        get_cover 上一首
+        ;;
+    next)
+        mpc next
+        get_cover 下一首
+        ;;
+    volume)
+        mpc volume $2
+        volume=`mpc volume | sed -e 's/volume://' -e 's/%//'`
+        dunstify "$volume%  " -i $ICON -t 1000 -r 5555 -u low -h int:value:$($volume)
+        ;;
+esac

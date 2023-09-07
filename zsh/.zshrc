@@ -6,12 +6,9 @@
 #  └┐┌┘├─┤├┬┘└─┐
 #   └┘ ┴ ┴┴└─└─┘
 export VISUAL='mousepad'
-export EDITOR='nvim'
 export TERMINAL='alacritty'
 export BROWSER='microsoft-edge-dev'
 export HISTORY_IGNORE="(ls|ll|cd|pwd|exit|sudo reboot|history|cd -|cd ..|cd ~)"
-export LEETCODE_USERNAME='19147046247'
-export LEETCODE_PASSWORD='wsad123..'
 if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
 fi
@@ -43,14 +40,15 @@ zstyle ':vcs_info:*' formats ' %B%s-[%F{magenta}%f %F{yellow}%b%f]-'
 #  ┬ ┬┌─┐┬┌┬┐┬┌┐┌┌─┐  ┌┬┐┌─┐┌┬┐┌─┐
 #  │││├─┤│ │ │││││ ┬   │││ │ │ └─┐
 #  └┴┘┴ ┴┴ ┴ ┴┘└┘└─┘  ─┴┘└─┘ ┴ └─┘
-expand-or-complete-with-dots() {
-  echo -n "\e[31m…\e[0m"
-  zle expand-or-complete
-  zle redisplay
-}
-zle -N expand-or-complete-with-dots
-bindkey "^I" expand-or-complete-with-dots
+#expand-or-complete-with-dots() {
+#  echo -n "\e[31m…\e[0m"
+#  zle expand-or-complete
+#  zle redisplay
+#}
+#zle -N expand-or-complete-with-dots
+#bindkey "^I" expand-or-complete-with-dots
 
+bindkey -e
 #  ┬ ┬┬┌─┐┌┬┐┌─┐┬─┐┬ ┬
 #  ├─┤│└─┐ │ │ │├┬┘└┬┘
 #  ┴ ┴┴└─┘ ┴ └─┘┴└─ ┴ 
