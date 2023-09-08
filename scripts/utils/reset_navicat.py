@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# by: https://github.com/JokingAboutLife/navicat-premium-linux-reset
 import os
 import subprocess
 import datetime

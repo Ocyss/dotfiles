@@ -117,7 +117,7 @@ fi
 #  ├─┤│ │ │ │ │  └─┐ │ ├─┤├┬┘ │ 
 #  ┴ ┴└─┘ ┴ └─┘  └─┘ ┴ ┴ ┴┴└─ ┴ 
 # $HOME/.local/bin/colorscript -r
-neofetch
+#neofetch
 
 # pnpm
 export PNPM_HOME="/home/ocyss/.local/share/pnpm"

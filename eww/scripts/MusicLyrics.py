@@ -14,6 +14,8 @@ from enum import Enum
 import signal
 import sys
 
+import mutagen
+
 
 MusicPath = "/home/ocyss/Music/"
 
@@ -46,45 +48,55 @@ class LrcParser:
 
     """ 解析Lrc歌词文件 """
 
-    def __init__(self, path):
-        with codecs.open(path, 'r', encoding="utf-8") as f:
-            text = f.read()              # 整个歌词文件的内容
-            # 检查[]<>等标签括号是否匹配
-            if not self.is_tags_valid(text):
-                raise SyntaxError('lrc文件标签[]或<>不匹配')
+    def __init__(self, music_file):
+        text = ""
+        lrcpath = MusicPath+os.path.splitext(music_file)[0]+".lrc"
+        if os.path.isfile(lrcpath):
+            with codecs.open(lrcpath, 'r', encoding="utf-8") as f:
+                text = f.read()
+        else:
+            tags = mutagen.File(MusicPath+music_file)
+            for v in tags.keys():
+                if v.startswith("USLT"):
+                    text = str(tags.get(v))
+                    break
+        # 整个歌词文件的内容
+        # 检查[]<>等标签括号是否匹配
+        if not self.is_tags_valid(text):
+            raise SyntaxError('lrc文件标签[]或<>不匹配')
 
-            # 歌词列表
-            #   每个元素为字典{
-            #                'time': ...,
-            #                'lyric': ...,
-            #                'extends': {'timestamps': [...], 'parts': [...]}
-            #               }
-            #   -- time: 每段歌词前时间标签所标注的时间
-            #   -- lyric：本time到下一个time标注之间的这段歌词(如:"[time1]lyric/n[time2]")
-            #   -- parts：对于含有<mm:ss.xx>的增强格式的内容切分后的列表
-            self.lyrics = []
+        # 歌词列表
+        #   每个元素为字典{
+        #                'time': ...,
+        #                'lyric': ...,
+        #                'extends': {'timestamps': [...], 'parts': [...]}
+        #               }
+        #   -- time: 每段歌词前时间标签所标注的时间
+        #   -- lyric：本time到下一个time标注之间的这段歌词(如:"[time1]lyric/n[time2]")
+        #   -- parts：对于含有<mm:ss.xx>的增强格式的内容切分后的列表
+        self.lyrics = []
 
-            # 提取所有标签
-            tags = [tag[1:-1] for tag in re.findall(TAG_PATTERN, text)]
+        # 提取所有标签
+        tags = [tag[1:-1] for tag in re.findall(TAG_PATTERN, text)]
 
-            # 提取所有标签标注的内容
-            segments = [segment.strip()
-                        for segment in re.split(TAG_PATTERN, text)]
-            segments = segments[1:]          # split结果包含第一个标签前的字符(包括空字符), 将其丢弃
+        # 提取所有标签标注的内容
+        segments = [segment.strip()
+                    for segment in re.split(TAG_PATTERN, text)]
+        segments = segments[1:]          # split结果包含第一个标签前的字符(包括空字符), 将其丢弃
 
-            tags_num = len(tags)
-            if tags_num != len(segments):
-                raise ValueError('标签数与标注内容个数不匹配, 请检查lrc文件')
+        tags_num = len(tags)
+        if tags_num != len(segments):
+            raise ValueError('标签数与标注内容个数不匹配, 请检查lrc文件')
 
-            # 逐段解析标签及其内容
-            for i in range(0, tags_num):
-                tag_type = self.get_tag_type(tags[i])
-                # 判断标签是时间标签还是ID标签, 分别处理
-                if tag_type == TagType.TIME:
-                    res = {'time': self.parse_time_tag(tags[i])}
-                    # 普通格式
-                    res['lyric'] = segments[i]
-                    self.lyrics.append(res)
+        # 逐段解析标签及其内容
+        for i in range(0, tags_num):
+            tag_type = self.get_tag_type(tags[i])
+            # 判断标签是时间标签还是ID标签, 分别处理
+            if tag_type == TagType.TIME:
+                res = {'time': self.parse_time_tag(tags[i])}
+                # 普通格式
+                res['lyric'] = segments[i]
+                self.lyrics.append(res)
 
     @staticmethod
     def is_tags_valid(text):
@@ -179,7 +191,6 @@ class LrcParser:
 
 
 def getLyrics():
-    lyrics = ""
     client = MPDClient()
     client.connect("localhost", 6600)
     cur = None
@@ -190,21 +201,16 @@ def getLyrics():
         try:
             if cur is None or cur['file'] != client.currentsong()['file']:
                 cur = client.currentsong()
-                file = os.path.splitext(cur['file'])[0]
-                lrc = LrcParser(MusicPath+file+".lrc")
+                lrc = LrcParser(cur['file']).get_lyrics()
                 l = 0
-            m = lrc.get_lyrics()
             status = client.status()
             t = float(status['elapsed'])
-            while l < len(m) and m[l]['time'] < t:
+            while l < len(lrc) and lrc[l]['time'] < t:
                 l += 1
-            if len(m[l-1]['lyric']) < 20:
-                lyrics = "[{0}]".format(m[l-1]['lyric'])
+            print("[{0}]".format(lrc[l-1]['lyric']))
+            sys.stdout.flush()
         except BaseException as e:
             break
-        print(lyrics)
-        sys.stdout.flush()
-        # os.system('eww update song_volume=%s%%' % status['volume'])
         time.sleep(0.4)
     getLyrics()
 
