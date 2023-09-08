@@ -1,12 +1,10 @@
 [Hotkey]
+# 切换启用/禁用输入法
+TriggerKeys=
 # 反复按切换键时进行轮换
 EnumerateWithTriggerKeys=False
 # 临时在当前和第一个输入法之间切换
 AltTriggerKeys=
-# 向前切换输入法
-EnumerateForwardKeys=
-# 向后切换输入法
-EnumerateBackwardKeys=
 # 轮换输入法时跳过第一个输入法
 EnumerateSkipFirst=False
 # 向前切换输入分组
@@ -18,9 +16,11 @@ ActivateKeys=
 # 取消激活输入法
 DeactivateKeys=
 
-[Hotkey/TriggerKeys]
+[Hotkey/EnumerateForwardKeys]
 0=Alt+Shift+Shift_L
-1=Alt+Shift+Shift_R
+
+[Hotkey/EnumerateBackwardKeys]
+0=Alt+Shift+Shift_R
 
 [Hotkey/PrevPage]
 0=Up
@@ -47,11 +47,11 @@ PreeditEnabledByDefault=False
 # 切换输入法时显示输入法信息
 ShowInputMethodInformation=True
 # 在焦点更改时显示输入法信息
-showInputMethodInformationWhenFocusIn=False
+showInputMethodInformationWhenFocusIn=True
 # 显示紧凑的输入法信息
 CompactInputMethodInformation=True
 # 显示第一个输入法的信息
-ShowFirstInputMethodInformation=False
+ShowFirstInputMethodInformation=True
 # 默认页大小
 DefaultPageSize=5
 # 覆盖 Xkb 选项

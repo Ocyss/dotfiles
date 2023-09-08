@@ -10,7 +10,7 @@
 
 case "$1" in
   --menu)
-    rofi  -modes "drun,window,run" -show drun -theme windows11-grid-dark;;
+    rofi  -modes "drun,window,run" -show drun -theme launchpad;;
 
   --rice)
 	RiceSelector;;

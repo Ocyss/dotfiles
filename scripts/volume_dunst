@@ -31,11 +31,7 @@ function send_notification() {
 case $1 in
     up)
         [[ $(pamixer --get-mute) == true ]] && pamixer -u
-        if [ $(get_volume) -ge 100  ]; then
-	        pamixer --allow-boost --set-limit 150 -i 1
-        else
-	        pamixer --allow-boost --set-limit 150 -i 5
-        fi 
+	    pamixer --allow-boost --set-limit 150 -i 5
         ;;
     down)        
         [[ $(pamixer --get-mute) == true ]] && pamixer -u

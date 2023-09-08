@@ -1,0 +1,31 @@
+alias sudo="sudo "
+
+alias grub-update="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias update="proxy_up && paru -Syu --nocombinedupgrade"
+alias grep="grep --color=auto"
+
+alias xwin="xprop"
+alias wifi="nmtui"
+#alias ls='exa -a -x --icons --group-directories-first'
+alias ll='exa -al --icons -h --time-style long-iso --octal-permissions --no-user --color-scale --group-directories-first'
+
+alias proxy_up='export all_proxy=http://127.0.0.1:20172 && export http_proxy=http://127.0.0.1:20172 && export https_proxy=http://127.0.0.1:20172'
+alias proxy_down='unset all_proxy && unset http_proxy && unset https_proxy'
+
+alias vim='nvim'
+alias :q='cd ..'
+
+#alias joshuto='LASTDIR=`jo`; cd "$LASTDIR"'
+
+alias goland='\_a(){ nohup goland $@ >/dev/null 2>&1 &}; \_a'
+
+### cd
+
+alias cdGo='cd ~/Documents/go/src'
+alias cdR='cd ~/Documents/rust'
+
+### Apps
+
+### Lol
+
+alias sz="tty-clock -s -c -S -n"
