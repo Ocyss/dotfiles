@@ -1,16 +1,18 @@
 __pycache__
 .idea
-fcitx/dbus
-mpv/watch_later
-fcitx5/rime/rime_ice.userdb
-mpd/mpdstate
 *.log
+.vscode
 zsh/zhistory
 temp
+fcitx/dbus
 fcitx5/rime/user.yaml
 fcitx5/rime/build
 fcitx5/rime/sync
 fcitx5/rime/luna_pinyin.userdb
+fcitx5/rime/rime_ice.userdb
 
 scripts/utils/reset_navicat.json
+
+mpv/watch_later
+mpd/mpdstate
 mpd/mpd.db
