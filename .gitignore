@@ -10,4 +10,7 @@ temp
 fcitx5/rime/user.yaml
 fcitx5/rime/build
 fcitx5/rime/sync
+fcitx5/rime/luna_pinyin.userdb
 
+scripts/utils/reset_navicat.json
+mpd/mpd.db
