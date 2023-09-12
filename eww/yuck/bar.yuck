@@ -63,7 +63,7 @@
     :height "43px"
   :anchor "top center")
   :monitor "0"
-  :stacking "bg"
+  :stacking "fg"
   :exclusive true
   :namespace true
   :windowtype "dock"

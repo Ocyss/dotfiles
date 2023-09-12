@@ -2,19 +2,14 @@ patch:
   switches/=:
     - name: ascii_mode
       states: [ 中, A ]
-      reset: 0
     - name: ascii_punct # 中英标点
       states: [ ¥, $ ]
-      reset: 1
     - name: traditionalization
       states: [ 简, 繁 ]
-      reset: 0
     - name: emoji
       states: [ 💀, 😄 ]
-      reset: 0
     - name: full_shape
       states: [ 半角, 全角 ]
-      reset: 0
 
 
 engine:

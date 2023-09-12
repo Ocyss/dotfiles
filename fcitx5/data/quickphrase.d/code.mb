@@ -1,5 +1,6 @@
 max	"func max(a,b int)int{if a>b{return a};return b}"
 min	"func min(a,b int)int{if a<b{return a};return b}"
 abs	"func abs(a int)int{if a<0{return -a};return a}"
-minof "func minOf(a []int)int{r:=a[0];for _,v:=range a{if v<r{r=v}};return r}"
-maxof "func maxOf(a []int)int{r:=a[0];for _,v:=range a{if v>r{r=v}};return r}"
+minof	"func minOf(a []int)int{r:=a[0];for _,v:=range a{if v<r{r=v}};return r}"
+maxof	"func maxOf(a []int)int{r:=a[0];for _,v:=range a{if v>r{r=v}};return r}"
+heap	"type hp []int\nfunc (h hp)Len()int{return len(h)}\nfunc (h hp)Less(i,j int)bool{return h[i]>h[j]}\nfunc (h hp)Swap(i,j int){h[i],h[j] = h[j],h[i]}\nfunc (h *hp)Push(v any){*h = append(*h, v.(int))}\nfunc (h *hp)Pop()(v any){n:=len(*h);v=(*h)[n-1];*h=(*h)[:n-1];return}"

@@ -83,10 +83,11 @@ get_cover() {
 }
 
 dislike(){
-	file="${MUSIC_DIR}/$(mpc current -f %file% | cut -f 1 -d '.')"
+	file="${MUSIC_DIR}/$(mpc current -f %file%)"
 	disLikeDir="${MUSIC_DIR}/dislike"
-	mv "$file"* "$disLikeDir"
-	mpc -q prev; get_cover;
+	mpc -q next; get_cover;
+	mv "$file" "$disLikeDir"
+	mpc update
 }
 
 ## Execute accordingly

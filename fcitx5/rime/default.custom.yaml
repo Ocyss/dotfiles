@@ -9,14 +9,16 @@ patch:
       select_first_character: "minus" # 即 -
       select_last_character: "equal" # 即 =
     # shift 英文上屏
-    ascii_composer/switch_key/+:
-        Shift_L: commit_code
-        Shift_R: commit_code
+    #ascii_composer/switch_key/+:
+    #    Shift_L: commit_code
+    #    Shift_R: commit_code
     key_binder/bindings/=:
       - { when: paging, accept: bracketleft, send: Page_Up } # 即 [
       - { when: has_menu, accept: bracketright, send: Page_Down } # 即 ]
       - { when: composing, accept: KP_Enter, send: Return } # 小键盘回车上屏
       - { when: composing, accept: Enter, send: Return } # 小键盘回车上屏
+      - { when: always, accept: Shift_L, send: Return } # Shift 上屏
+      - { when: always, accept: Shift_R, send: Return } # Shift 上屏
   switcher/hotkeys/=:
       - Control+grave
 
