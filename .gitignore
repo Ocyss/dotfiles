@@ -16,3 +16,4 @@ scripts/utils/reset_navicat.json
 mpv/watch_later
 mpd/mpdstate
 mpd/mpd.db
+mpv/scripts/mpvremote
