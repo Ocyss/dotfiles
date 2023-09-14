@@ -18,13 +18,15 @@
   .song-pause {
     color: #fecf25;
   }
-
-  .song_btn_prev,
-  .song_btn_next,
-  .song_btn_dislike {
+  .song_btn {
     color: #f4ede8;
     font-size: 22px;
-    margin: 0 10px;
+    label {
+      margin: 0 5px;
+    }
+  }
+  .song_btn:hover {
+    color: #4fe5fc;
   }
   .song_btn_play {
     font-size: 28px;

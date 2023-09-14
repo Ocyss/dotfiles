@@ -98,6 +98,10 @@ case "$1" in
   
   --txt)
     mousepad;; 
+
+  --phone)
+    kdeconnect-app;; 
+    
   *)
     echo "Opción no válida";;
 esac

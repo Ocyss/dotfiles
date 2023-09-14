@@ -8,20 +8,26 @@
 (defwidget music []
   (eventbox :onhover "eww update music_reveal=true"
     :onhoverlost "eww update music_reveal=false"
-    :cursor "pointer"
-    :onclick "eww open-many --toggle player"
     (box :class "music" :orientation "h" :space-evenly false
       ; (label :text "${song_volume}")
-      (box :class "song_cover_art" :style "background-image: url('${song_status.cover}');")
+      (eventbox
+        :cursor "pointer"
+        :onclick "eww open-many --toggle player"
+        (box
+          :class "song_cover_art"
+          :style "background-image: url('${song_status.cover}');"
+        )
+      )
       (label :visible "${!music_reveal}" :class "song ${song_status.play ? "song-play" : "song-pause"}" :wrap true :text song :limit-width 20)
       (revealer :transition "none"
         :reveal music_reveal
         (box  :oreintation "h" :space-evenly false
-          (label  :class "song_title" :text "${song_status.title} - ${song_status.artist}")
-          (button :class "song_btn_prev" :onclick "scripts/music_info --prev" "")
-          (button :class "song_btn_play" :onclick "scripts/music_info --toggle" "${song_status.play ? "󰏦" : "󰐍"}")
-          (button :class "song_btn_next" :onclick "scripts/music_info --next" "")
-          (button :class "song_btn_dislike" :onclick "scripts/music_info --dislike" "")
+          (label  :class "song_title"  :text "${song_status.title} - ${song_status.artist}")
+          (eventbox :class "song_btn song_btn_prev" :cursor "pointer" :onclick "scripts/music_info --prev" "")
+          (eventbox :class "song_btn song_btn_play" :cursor "pointer" :onclick "scripts/music_info --toggle" "${song_status.play ? "󰏦" : "󰐍"}")
+          (eventbox :class "song_btn song_btn_next" :cursor "pointer" :onclick "scripts/music_info --next" "")
+          (eventbox :class "song_btn song_btn_dislike" :cursor "pointer" :onclick "scripts/music_info --dislike" "")
+          
         )
       )
     )
