@@ -19,6 +19,6 @@ patch:
       - { when: composing, accept: Enter, send: Return } # 小键盘回车上屏
       - { when: always, accept: Shift_L, send: Return } # Shift 上屏
       - { when: always, accept: Shift_R, send: Return } # Shift 上屏
+      - { when: always, accept: Control+period, toggle: ascii_punct } # 中英文标点
   switcher/hotkeys/=:
-      - Control+grave
-
+    - Control+grave

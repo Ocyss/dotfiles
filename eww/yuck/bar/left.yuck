@@ -6,7 +6,14 @@
 (defwidget powermenu_botton []
   (eventbox :cursor "pointer"
     (box :class "powermenu_botton" :vexpand: false :hexpand: false
-      (button :onclick "eww open-many --toggle powermenu" "")
+      ;(button :onclick "eww open-many --toggle powermenu" "")
+      ;(button :onclick "alacritty" "")
+      (button
+        :onclick "eww open --toggle powermenu"
+        :onmiddleclick "bash ~/.config/scripts/OpenApps --terminal"
+        :onrightclick "bash ~/.config/scripts/OpenApps --menu"
+        ""
+      )
     )
   )
 )

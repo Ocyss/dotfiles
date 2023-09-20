@@ -1,0 +1,6 @@
+#!/bin/sh
+# scripts by Ocyss
+value=`ddcutil --bus 5 --brief getvcp 0x0c 0x10 0x12 | jq '[inputs | split(" ") | {(.[1]): {"min":0,"max":(.[4] | tonumber),"val":(.[3] | tonumber)}}] | add' -n -R -c`
+eww update lightbulb_val=$value
+
+eww open --toggle lightbulb

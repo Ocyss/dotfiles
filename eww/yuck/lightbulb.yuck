@@ -1,0 +1,14 @@
+(defvar lightbulb_val '{"0C":{"min":0,"max":170,"val":40},"10":{"min":0,"max":100,"val":0},"12":{"min":0,"max":100,"val":30}}')
+
+(defwidget lightbulb_box []
+  (box :class "lightbulb_box" :orientation "h" :space-evenly false :vexpand false :hexpand false
+    (label :text lightbulb_val)
+  )
+)
+
+;;  music
+(defwindow lightbulb :stacking "fg" :focusable false
+  :geometry (geometry :x "20%" :y "0" :width 428 :height 104 :anchor "top right")
+  :monitor "0"
+  (lightbulb_box)
+)

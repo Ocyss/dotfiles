@@ -46,23 +46,11 @@
 
 
 (defwidget lightbulb []
-  (eventbox :onhover "eww update lig_reveal=true"
-    :onhoverlost "eww update lig_reveal=false"
+  (eventbox 
     :cursor "pointer"
+    ; :onclick "scripts/lightbulb"
     (box :space-evenly false :orientation "h" :spacing "3" :class "lightbulb"
-      (button :onclick "" :class "lightbulb_icon" `󱩓`)
-      (revealer :transition "slideleft"
-        :reveal lig_reveal
-        :duration "350ms"
-        (scale :class "volbar"
-          :value lightbulb_percent
-          :orientation "h"
-          :tooltip "${lightbulb_percent}%"
-          :max 101
-          :min 0
-          :timeout 1000
-        :onchange "ddcutil --bus 5 --sleep-multiplier 0.1 setvcp 10 {}")
-      )
+      (label :class "lightbulb_icon" :text `󱩓`)
     )
   )
 )

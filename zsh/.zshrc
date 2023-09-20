@@ -6,10 +6,13 @@
 #  └┐┌┘├─┤├┬┘└─┐
 #   └┘ ┴ ┴┴└─└─┘
 export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
+export FPATH="~/Ocyss/tools/eza/completions/zsh:$FPATH"
 export VISUAL='mousepad'
 export TERMINAL='alacritty'
 export BROWSER='microsoft-edge-dev'
 export HISTORY_IGNORE="(ls|ll|cd|pwd|exit|sudo reboot|history|cd -|cd ..|cd ~)"
+export WINEPREFIX=~/.deepinwine/Spark-weixin
+
 if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
 fi

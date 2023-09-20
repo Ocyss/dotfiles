@@ -1,4 +1,4 @@
-#files: 988	version: 5.9
+#files: 990	version: 5.9
 
 _comps=(
 '-' '_precommand'
@@ -355,7 +355,6 @@ _comps=(
 'evim' '_vim'
 'evince' '_evince'
 'ex' '_vi'
-'exa' '_exa'
 'exec' '_exec'
 'expand' '_unexpand'
 'export' '_typeset'
@@ -363,6 +362,7 @@ _comps=(
 'express' '_webbrowser'
 'extcheck' '_java'
 'extractres' '_psutils'
+'eza' '_eza'
 'fab' '_fab'
 'fail2ban-client' '_fail2ban-client'
 'fakeroot' '_fakeroot'
@@ -1865,7 +1865,7 @@ autoload -Uz _afew _alacritty _android _archlinux-java _artisan \
             _coredumpctl _cppcheck _curl _dad _dart \
             _dget _dhcpcd _diana _direnv _docker \
             _docpad _drush _ecdsautil _emacs _emacsclient \
-            _emulator _envdir _exa _exportfs _fab \
+            _emulator _envdir _exportfs _eza _fab \
             _fail2ban-client _fd _ffind _fleetctl _flutter \
             _fvm _fwupdmgr _gas _ghc _gist \
             _git-flow _git-pulls _git-revise _git-wtf _glances \
