@@ -3,7 +3,7 @@
     width =  (300,600)
     height = 1400
     origin = top-right
-    offset = 33x66
+    offset = 10x5
     notification_limit = 0
     enable_posix_regex = true
     progress_bar = true

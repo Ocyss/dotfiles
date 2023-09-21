@@ -9,9 +9,8 @@ patch:
       select_first_character: "minus" # 即 -
       select_last_character: "equal" # 即 =
     # shift 英文上屏
-    #ascii_composer/switch_key/+:
-    #    Shift_L: commit_code
-    #    Shift_R: commit_code
+    # ascii_composer/switch_key/Shift_L: Return
+    # ascii_composer/switch_key/Shift_R: Return
     key_binder/bindings/=:
       - { when: paging, accept: bracketleft, send: Page_Up } # 即 [
       - { when: has_menu, accept: bracketright, send: Page_Down } # 即 ]
