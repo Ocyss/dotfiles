@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+#  ╔═╗╔═╗╔═╗╔═╗  ╦  ╔═╗╦ ╦╔╗╔╔═╗╦ ╦╔═╗╦═╗
+#  ╠═╣╠═╝╠═╝╚═╗  ║  ╠═╣║ ║║║║║  ╠═╣║╣ ╠╦╝
+#  ╩ ╩╩  ╩  ╚═╝  ╩═╝╩ ╩╚═╝╝╚╝╚═╝╩ ╩╚═╝╩╚═
+#	Script to control apps launcher
+#   Author: z0mbi3
+#	url: https://github.com/gh0stzk
+
+# From here you can control your favorite applications for all themes.
+
+case "$1" in
+  --menu)
+    rofi -show drun -replace;;
+
+  --terminal)
+    kitty;;
+
+  --scratch)
+    WAYLAND_DISPLAY=no tdrop -a -w 70% -h 35% -y 0 -x 15%  --class scratch alacritty --class=scratch
+    ;;
+
+  --floating)
+    kitty --class FloaTerm \
+					;;
+
+  --jo)
+    alacritty --class FloaTerm,Alacritty \
+					-o window.dimensions.lines=28 \
+					   window.dimensions.columns=90 \
+					-e jo;;
+
+  --nvim)
+    alacritty -e nvim;;
+
+  --music)
+    alacritty --class FloaTerm,Alacritty \
+					-o window.dimensions.lines=38 \
+					   window.dimensions.columns=97 \
+					-e ncmpcpp;;
+
+  --fetch)
+    alacritty --hold --class FloaTerm,Alacritty \
+					-o window.dimensions.lines=26 \
+					   window.dimensions.columns=40 \
+					-e ~/.local/bin/sysfetch;;
+
+  #Apps
+  --filemanager)
+	alacritty -e jo;;
+
+  --browser)
+	microsoft-edge-stable --flag-switches-begin \
+        --enable-features=VaapiVideoDecoder,VaapiVideoEncoder,VaapiIgnoreDriverChecks,Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,RawDraw,CanvasOopRasterization \
+        --ignore-gpu-blocklist \
+        --enable-gpu-rasterization \
+        --flag-switches-end \
+        --gtk-version=3 --force-dark-mode --enable-wayland-ime \
+        --ozone-platform=wayland --enable-features=UseOzonePlatform;;
+        # --force-device-scale-factor=1.6 \
+
+  --editor)
+	geany;;
+
+  --telegram)
+	telegram;;
+
+  --whats)
+	whatsapp-nativefier --disable-gpu;;
+
+  --soundcontrol)
+    pavucontrol;;
+  
+  --files)
+    dolphin;;
+
+  --qq)
+    qq;;
+  
+  --code)
+    code;;
+
+  --mail)
+    mailspring;;
+  
+  --txt)
+    mousepad;; 
+
+  --phone)
+    kdeconnect-app;; 
+    
+  *)
+    echo "Opción no válida";;
+esac

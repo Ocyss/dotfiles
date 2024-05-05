@@ -1,0 +1,4 @@
+
+
+mv ~/.config/$1 ~/dotfiles && ln ~/dotfiles/$1 ~/.config -s
+exa -al --icons -h --time-style long-iso --octal-permissions --no-user --color-scale --group-directories-first ~/.config | grep $1

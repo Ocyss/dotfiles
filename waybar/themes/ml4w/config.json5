@@ -1,0 +1,50 @@
+// __        __          _
+// \ \      / /_ _ _   _| |__   __ _ _ __
+//  \ \ /\ / / _` | | | | '_ \ / _` | '__|
+//   \ V  V / (_| | |_| | |_) | (_| | |
+//    \_/\_/ \__,_|\__, |_.__/ \__,_|_|
+//                 |___/
+//
+// by Stephan Raabe (2023)
+// -----------------------------------------------------
+//
+{
+    // General Settings
+    "layer": "top",
+    "margin-top": 4,
+    "margin-bottom": 0,
+    "height": 5,
+    "mouse_warping": "none",
+    "margin-left": 0,
+    "margin-right": 0,
+    "spacing": 0,
+    // Load Modules
+    "include": ["~/dotfiles/waybar/modules.json5"],
+    // Modules Left
+    "modules-left": [
+        "custom/appmenu",
+        "custom/wallpaper",
+        "wlr/taskbar",
+        "group/quicklinks",
+        "mpd",
+    ],
+    // Modules Center
+    "modules-center": ["hyprland/workspaces"],
+    // Modules Right
+    "modules-right": [
+        // "custom/updates",
+        "battery",
+        "pulseaudio",
+        // "bluetooth",
+        
+        "idle_inhibitor",
+        "group/hardware",
+        "custom/cliphist",
+        // START NETWORK TOOGLE
+        // "network",
+        // END NETWORK TOOGLE
+        "custom/exit",
+        "tray",
+        "clock",
+    ],
+}

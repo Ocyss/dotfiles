@@ -1,0 +1,39 @@
+alias sudo="sudo "
+alias vi="vim"
+alias grub-update="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+alias update="proxy_up && paru -Syu --nocombinedupgrade"
+alias grep="grep --color=auto"
+alias yay="paru"
+
+alias xwin="xprop"
+alias wifi="nmtui"
+
+alias gitlog="git log --oneline --graph"
+
+#alias ls='exa -a -x --icons --group-directories-first'
+if [ -x /usr/bin/dircolors ]; then
+        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+        alias ls='ls --color=auto'
+fi
+alias ll='exa -al --icons -h --time-style long-iso --octal-permissions --no-user --color-scale --group-directories-first'
+
+alias proxy_up='export all_proxy=socks5://127.0.0.1:20170 && export http_proxy=socks5://127.0.0.1:20170 && export https_proxy=socks5://127.0.0.1:20170'
+alias proxy_down='unset all_proxy && unset http_proxy && unset https_proxy'
+#alias vim='nvim'
+alias :q='cd ..'
+
+#alias joshuto='LASTDIR=`jo`; cd "$LASTDIR"'
+
+alias goland='\_a(){ nohup goland $@ >/dev/null 2>&1 &}; \_a'
+
+alias parulog='cat /var/log/pacman.log | grep -E (installed|reinstalled|removed|downgraded|upgraded)'
+### Apps
+
+### Lol
+
+alias sz="tty-clock -s -c -S -n"
+
+alias wifi="nmtui"
+alias wifis="nmcli dev wifi show-password"
+
+alias work="genact -m docker_build -i 150  --exit-after-time 10min"
