@@ -24,7 +24,7 @@ alias :q='cd ..'
 
 #alias joshuto='LASTDIR=`jo`; cd "$LASTDIR"'
 
-alias goland='\_a(){ nohup goland $@ >/dev/null 2>&1 &}; \_a'
+#alias goland='\_a(){ nohup goland $@ >/dev/null 2>&1 &}; \_a'
 
 alias parulog='cat /var/log/pacman.log | grep -E (installed|reinstalled|removed|downgraded|upgraded)'
 ### Apps

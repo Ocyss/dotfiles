@@ -17,7 +17,7 @@ append_path "$(go env GOPATH)/bin"
 append_path "$HOME/.local/bin"
 append_path "/opt/flutter/bin"
 append_path "$HOME/dotfiles/scripts"
-
+append_path "$HOME/.cargo/bin"
 
 export PUB_HOSTED_URL="https://pub.flutter-io.cn"
 export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
@@ -149,7 +149,7 @@ fi
 #  ├─┤│ │ │ │ │  └─┐ │ ├─┤├┬┘ │ 
 #  ┴ ┴└─┘ ┴ └─┘  └─┘ ┴ ┴ ┴┴└─ ┴ 
 # $HOME/.local/bin/colorscript -r
-neofetch
+#neofetch
 
 
 # pnpm
@@ -161,4 +161,4 @@ esac
 # pnpm end
 
 alias gf=gf
-
+#printf '\eP$f{"hook": "SourcedRcFileForWarp", "value": { "shell": "zsh" }}\x9c'

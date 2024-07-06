@@ -130,7 +130,7 @@ window#waybar.empty #window {
   border-radius: 8px;
   font-weight: normal;
   font-style: normal;
-  opacity: 0.8;
+  opacity: 1;
   border: 2px solid @backgroundlight;
 }
 
@@ -430,7 +430,7 @@ window#waybar.empty #window {
  * ----------------------------------------------------- */
 
 #tray {
-  border: 3px solid @backgroundlight;
+  background-color: @backgroundlight;
   /* border-right: none; */
   font-size: 0.75rem;
   color: @textcolor2;
@@ -440,6 +440,7 @@ window#waybar.empty #window {
   margin: 4px 0px 4px 0px;
   opacity: 0.8;
   margin-right: 8px;
+  opacity: 0.9;
 }
 
 #tray menu {

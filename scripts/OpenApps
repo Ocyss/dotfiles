@@ -13,14 +13,15 @@ case "$1" in
     rofi -show drun -replace;;
 
   --terminal)
-    kitty;;
+    # kitty;;
+    warp-terminal;;
 
   --scratch)
     WAYLAND_DISPLAY=no tdrop -a -w 70% -h 35% -y 0 -x 15%  --class scratch alacritty --class=scratch
     ;;
 
   --floating)
-    kitty --class FloaTerm \
+    warp-terminal --class FloaTerm \
 					;;
 
   --jo)

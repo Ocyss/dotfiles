@@ -20,3 +20,5 @@ mpd/sticker.sql
 mpv/scripts/mpvremote
 
 hypr/envs.private.conf
+mpd/mpd.pid
+zsh/zcompdump

@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/ocyss/dotfiles/fcitx5/rime/lua'
+let g:netrw_dirhist_3='/home/ocyss/dotfiles/fcitx5/rime'
+let g:netrw_dirhist_2='/home/ocyss/.npm/_logs'
+let g:netrw_dirhist_1='/home/ocyss/.npm'
+let g:netrw_dirhist_0='/home/ocyss/.npm/_cacache'
+let g:netrw_dirhist_9='/home/ocyss/.npm'
+let g:netrw_dirhist_8='/home/ocyss/dotfiles/dunst'
+let g:netrw_dirhist_7='/home/ocyss/Ocyss/dotfile/XXiaoA/sxhkd'
+let g:netrw_dirhist_6='/home/ocyss/Ocyss/dotfile/XXiaoA/bspwm'
+let g:netrw_dirhist_5='/var/lib/lxdm'
