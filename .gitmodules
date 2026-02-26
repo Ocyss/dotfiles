@@ -1,0 +1,3 @@
+[submodule "lib/NotifyClass-NotifyCreator"]
+	path = lib/NotifyClass-NotifyCreator
+	url = https://github.com/XMCQCX/NotifyClass-NotifyCreator
