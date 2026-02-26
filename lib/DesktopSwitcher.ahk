@@ -1,0 +1,205 @@
+﻿; https://github.com/Ciantic/VirtualDesktopAccessor
+
+VDA_PATH := "lib\dll\VirtualDesktopAccessor.dll"
+
+hVirtualDesktopAccessor := DllCall("LoadLibrary", "Str", VDA_PATH, "Ptr")
+
+GetDesktopCountProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "GetDesktopCount", "Ptr")
+GoToDesktopNumberProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "GoToDesktopNumber", "Ptr")
+GetCurrentDesktopNumberProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr",
+    "GetCurrentDesktopNumber", "Ptr")
+IsWindowOnCurrentVirtualDesktopProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr",
+    "IsWindowOnCurrentVirtualDesktop", "Ptr")
+IsWindowOnDesktopNumberProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr",
+    "IsWindowOnDesktopNumber", "Ptr")
+MoveWindowToDesktopNumberProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr",
+    "MoveWindowToDesktopNumber", "Ptr")
+IsPinnedWindowProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "IsPinnedWindow", "Ptr")
+GetDesktopNameProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "GetDesktopName", "Ptr")
+SetDesktopNameProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "SetDesktopName", "Ptr")
+CreateDesktopProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "CreateDesktop", "Ptr")
+RemoveDesktopProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "RemoveDesktop", "Ptr")
+PinAppProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "PinApp", "Ptr")
+UnPinAppProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr", "UnPinApp", "Ptr")
+
+; On change listeners
+RegisterPostMessageHookProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr",
+    "RegisterPostMessageHook", "Ptr")
+UnregisterPostMessageHookProc := DllCall("GetProcAddress", "Ptr", hVirtualDesktopAccessor, "AStr",
+    "UnregisterPostMessageHook", "Ptr")
+
+CurDesktop := 0
+PreDesktop := 0
+
+CreateInitialDesktops(NumInitialDesktops) {
+    DesktopCount := GetDesktopCount()
+    Current := DllCall(GetCurrentDesktopNumberProc, "Int")
+
+    loop (NumInitialDesktops - DesktopCount) {
+        CreateDesktop()
+    }
+    ;_switchDesktopToTarget(Current)
+}
+
+MoveCurrentWindowToDesktop(desktopNumber) {
+    global MoveWindowToDesktopNumberProc, GoToDesktopNumberProc
+    activeHwnd := WinGetID("A")
+    DllCall(MoveWindowToDesktopNumberProc, "Ptr", activeHwnd, "Int", desktopNumber, "Int")
+    DllCall(GoToDesktopNumberProc, "Int", desktopNumber)
+}
+
+MoveCurrentWindowToDesktops(desktopNumber) {
+    global MoveWindowToDesktopNumberProc, GoToDesktopNumberProc
+    activeHwnd := WinGetID("A")
+    DllCall(MoveWindowToDesktopNumberProc, "Ptr", activeHwnd, "Int", desktopNumber, "Int")
+}
+
+MoveOrGotoDesktopNumber(num) {
+    ; If user is holding down Mouse left button, move the current window also
+    if (GetKeyState("LButton")) {
+        MoveCurrentWindowToDesktop(num)
+    } else {
+        GoToDesktopNumber(num)
+    }
+    return
+}
+
+GetDesktopCount() {
+    global GetDesktopCountProc
+    count := DllCall(GetDesktopCountProc, "Int")
+    return count
+}
+
+GoToPrevDesktop() {
+    global GetCurrentDesktopNumberProc, GoToDesktopNumberProc
+    current := DllCall(GetCurrentDesktopNumberProc, "Int")
+    last_desktop := GetDesktopCount() - 1
+    ; If current desktop is 0, go to last desktop
+    if (current = 0) {
+        MoveOrGotoDesktopNumber(last_desktop)
+    } else {
+        MoveOrGotoDesktopNumber(current - 1)
+    }
+    return
+}
+
+GoToNextDesktop() {
+    global GetCurrentDesktopNumberProc
+    current := DllCall(GetCurrentDesktopNumberProc, "Int")
+    last_desktop := GetDesktopCount() - 1
+    ; If current desktop is last, go to first desktop
+    if (current = last_desktop) {
+        MoveOrGotoDesktopNumber(0)
+    } else {
+        MoveOrGotoDesktopNumber(current + 1)
+    }
+    return
+}
+
+TabDesktop() {
+    global GoToDesktopNumberProc
+    GoToDesktopNumber(PreDesktop)
+    return
+}
+
+GoToDesktopNumber(num) {
+    global GoToDesktopNumberProc, PreDesktop, CurDesktop
+    DllCall("User32\AllowSetForegroundWindow", "Int", -1)
+    PreDesktop := CurDesktop
+    Sleep 50
+    DllCall(GoToDesktopNumberProc, "Int", num, "Int")
+    CurDesktop := num
+    Sleep 50
+
+    ;focusTheForemostWindow(num)
+    return
+}
+
+focusTheForemostWindow(targetDesktop) {
+    foremostWindowId := getForemostWindowIdOnDesktop(targetDesktop)
+    TrayTip foremostWindowId
+    if isWindowNonMinimized(foremostWindowId) {
+        WinActivate("ahk_id " foremostWindowId)
+    }
+
+}
+
+isWindowNonMinimized(windowId) {
+    MMX := WinGetMinMax("ahk_id " windowId)
+    return MMX != -1
+}
+
+getForemostWindowIdOnDesktop(n) {
+    ; winIDList contains a list of windows IDs ordered from the top to the bottom for each desktop.
+    winIDList := WinGetList()
+    for windowID in winIDList {
+        windowIsOnDesktop := DllCall(IsWindowOnDesktopNumberProc, "UInt", windowID, "UInt", n)
+        ; Select the first (and foremost) window which is in the specified desktop.
+        if (windowIsOnDesktop == 1) {
+            return windowID
+        }
+    }
+    return -1
+}
+
+GetDesktopName(num) {
+    global GetDesktopNameProc
+    utf8_buffer := ""
+    utf8_buffer_len := utf8_buffer := Buffer(1024, 0) ; V1toV2: if 'utf8_buffer' is a UTF-16 string, use 'VarSetStrCapacity(&utf8_buffer, 1024)'
+    ran := DllCall(GetDesktopNameProc, "Int", num, "Ptr", utf8_buffer, "Ptr", utf8_buffer_len, "Int")
+    name := StrGet(utf8_buffer, 1024, "UTF-8")
+    return name
+}
+
+SetDesktopName(num, name) {
+    ; NOTICE! For UTF-8 to work AHK file must be saved with UTF-8 with BOM
+
+    global SetDesktopNameProc
+    name_utf8 := Buffer(StrPut(name, "UTF-8")) ; V1toV2: if 'name_utf8' is a UTF-16 string, use 'VarSetStrCapacity(&name_utf8, 1024)'
+    StrPut(name, name_utf8, "UTF-8")
+    ran := DllCall(SetDesktopNameProc, "Int", num, "Ptr", name_utf8, "Int")
+    return ran
+}
+
+CreateDesktop() {
+    global CreateDesktopProc
+    ran := DllCall(CreateDesktopProc)
+    return ran
+}
+
+; SetDesktopName(0, "It works! 🐱")
+; How to listen to desktop changes
+DllCall(RegisterPostMessageHookProc, "Ptr", A_ScriptHwnd, "Int", 0x1400 + 30, "Int")
+OnMessage(0x1400 + 30, OnChangeDesktop)
+
+OnChangeDesktop(wParam, lParam, msg, hwnd) {
+    Critical(100)
+    OldDesktop := wParam + 1
+    NewDesktop := lParam + 1
+    Name := GetDesktopName(NewDesktop - 1)
+
+    ; Use Dbgview.exe to checkout the output debug logs
+    OutputDebug("Desktop changed to " Name " from " OldDesktop " to " NewDesktop)
+}
+
+RemoveDesktop(remove_desktop_number, fallback_desktop_number) {
+    global RemoveDesktopProc
+    ran := DllCall(RemoveDesktopProc, "Int", remove_desktop_number, "Int", fallback_desktop_number, "Int")
+    return ran
+}
+
+PinApp() {
+    global PinAppProc
+    activeHwnd := WinGetID("A")
+    ran := DllCall(PinAppProc, "Ptr", activeHwnd, "Int")
+    TrayTip WinGetProcessName(activeHwnd), "成功固定"
+    return ran
+}
+
+UnPinApp() {
+    global UnPinAppProc
+    activeHwnd := WinGetID("A")
+    ran := DllCall(UnPinAppProc, "Ptr", activeHwnd, "Int")
+    TrayTip WinGetProcessName(activeHwnd), "取消固定"
+    return ran
+}

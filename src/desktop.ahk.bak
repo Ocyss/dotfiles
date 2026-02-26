@@ -1,0 +1,34 @@
+﻿#Include <DesktopSwitcher>
+
+InitDesktop() {
+    ; 初始化9个桌面
+    CreateInitialDesktops(6)
+    SetDesktopName(0, "摸鱼🐋")
+    SetDesktopName(1, "办公①")
+    SetDesktopName(2, "办公②")
+    SetDesktopName(3, "聊天👥")
+    SetDesktopName(4, "娱乐👾")
+    SetDesktopName(5, "终端😶‍🌫️")
+}
+
+; $Win
+*#p:: PinApp()
+*#1:: MoveOrGotoDesktopNumber(0)
+*#2:: MoveOrGotoDesktopNumber(1)
+*#3:: MoveOrGotoDesktopNumber(2)
+*#4:: MoveOrGotoDesktopNumber(3)
+*#5:: MoveOrGotoDesktopNumber(4)
+*#6:: MoveOrGotoDesktopNumber(5)
+;*#tab::TabDesktop()
+;*#`::Send("#{Tab}")
+
+; $Win + Shift
+*#+p:: UnPinApp()
+*#+1:: MoveCurrentWindowToDesktops(0)
+*#+2:: MoveCurrentWindowToDesktops(1)
+*#+3:: MoveCurrentWindowToDesktops(2)
+*#+4:: MoveCurrentWindowToDesktops(3)
+*#+5:: MoveCurrentWindowToDesktops(4)
+*#+6:: MoveCurrentWindowToDesktops(5)
+*#+left:: GoToPrevDesktop()
+*#+right:: GoToNextDesktop()
