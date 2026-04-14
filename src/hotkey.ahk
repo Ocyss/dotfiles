@@ -80,33 +80,36 @@ ChangeAudioOutput("Speakers", false)
     ChangeAudioOutput(device, true)
 }
 
-#!v:: { ; 快捷键：Win + Alt + V
-    original := A_Clipboard            ; 备份原剪贴板内容
-    ClipWait(0.5)                      ; 等待剪贴板可用（防止空值）
-
-    temp := original                   ; 创建副本
-    temp := StrReplace(temp, "\n", "`n")  ; 转换 \n -> 真换行
-    temp := StrReplace(temp, "\t", "`t")  ; 转换 \t -> 制表符
-
-    A_Clipboard := temp                ; 临时替换剪贴板为转换后的内容
-    Sleep 50                           ; 稍等片刻，确保系统接收
-    Send "^v"                          ; 模拟粘贴操作
-    Sleep 50                           ; 稍等粘贴完成
-    A_Clipboard := original            ; 恢复原剪贴板
+#!v:: { ; 快捷键：Win + Alt + V (解义粘贴)
+    PasteProcessed(StrReplace(StrReplace(A_Clipboard, "\n", "`n"), "\t", "`t"))
 }
 
-#^v:: {                     ; Win+Ctrl+V
-    o := A_Clipboard        ; 备份
-    ClipWait 0.5            ; 等剪贴板
-    t := StrReplace(o, "`r`n", "\n")
-    t := StrReplace(t, "`n", "\n")   ; 统一\n
-    t := StrReplace(t, "`t", "\t")   ; 制表符
-    A_Clipboard := t
-    Sleep 50
-    Send "^v"               ; 粘贴
-    Sleep 50
-    A_Clipboard := o        ; 恢复
+#^v:: { ; 快捷键：Win + Ctrl + V (转义粘贴)
+    t := StrReplace(StrReplace(A_Clipboard, "`r`n", "\n"), "`n", "\n")
+    PasteProcessed(StrReplace(t, "`t", "\t"))
 }
+
+#+v:: { ; 快捷键：Win + Shift + V (转义粘贴带号)
+    t := StrReplace(A_Clipboard, "\", "\\")
+    t := StrReplace(StrReplace(t, "`r`n", "\n"), "`n", "\n")
+    t := StrReplace(t, "`t", "\t")
+    PasteProcessed(StrReplace(t, '"', '\"'))
+}
+
+PasteProcessed(content) {
+    original := A_Clipboard
+    A_Clipboard := content
+    if ClipWait(0.5) {
+        Send "^v"
+        Sleep 100
+    }
+    A_Clipboard := original
+}
+
+#n:: {
+    Run "C:\Users\micro\AppData\Local\Programs\Zed\Zed.exe"
+}
+
 
 ; 抑制Win键弹出开始菜单
 ~LWin:: Send "{Blind}{vkE8}"
