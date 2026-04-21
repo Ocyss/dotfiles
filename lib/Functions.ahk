@@ -2,7 +2,7 @@
  * 获取当前程序名称
  * 自带的WinGetProcessName无法获取到uwp应用的名称
  * 来源：https://www.autohotkey.com/boards/viewtopic.php?style=7&t=112906
- * @returns {string} 
+ * @returns {string}
  */
 GetProcessName() {
     fn := (winTitle) => (WinGetProcessName(winTitle) == 'ApplicationFrameHost.exe')
@@ -20,8 +20,8 @@ GetProcessName() {
 /**
  * 从环境中补全程序的绝对路径
  * 来源: https://autohotkey.com/board/topic/20807-fileexist-in-path-environment/
- * @param target 程序路径 
- * @returns {string|any} 
+ * @param target 程序路径
+ * @returns {string|any}
  */
 CompleteProgramPath(target) {
 
@@ -54,7 +54,7 @@ CompleteProgramPath(target) {
 
 /**
  * 通过命令行去启动程序，防止会导致以管理员启动软件的问题
- * @param target 程序路径 
+ * @param target 程序路径
  * @param arguments 参数
  * @param directory 工作目录
  * @param operation 选项 (runas/open/edit/print
@@ -95,7 +95,7 @@ RunAsAdmin(target, args, workingDir, options) {
  * @param {string} args 参数
  * @param {string} workingDir 工作目录
  * @param {number} admin 是否为管理员启动
- * @returns {void} 
+ * @returns {void}
  */
 RunPrograms(target, args := "", workingDir := "", admin := false, runInBackground := false) {
     ; 记录当前窗口的hwnd，当软件启动失败时还原焦点
@@ -107,14 +107,7 @@ RunPrograms(target, args := "", workingDir := "", admin := false, runInBackgroun
 
     try {
         ; 补全程序路径
-        programPath := CompleteProgramPath(target)
-
-        if not (programPath) {
-            ; 没有找到程序，可能是ms-setting: 或shell:之类的连接
-            ; Run(args ? target " " args : target, workingDir, runInBackground ? "Hide" : "")
-            ShellRun(target, args, workingDir, , runInBackground ? 0 : unset)
-            return
-        }
+        programPath := CompleteProgramPath(target) || target
 
         ; 如果是文件夹直接打开
         if (InStr(FileExist(programPath), "D")) {
@@ -124,7 +117,6 @@ RunPrograms(target, args := "", workingDir := "", admin := false, runInBackgroun
 
         ; 避免在快捷方式无效，导致的程序卡住
         ShortcutTargetExist(programPath)
-        ; MsgBox(admin)
         if (admin) {
             runAsAdmin(programPath, args, workingDir, runInBackground ? "Hide" : "")
         } else {
@@ -161,7 +153,7 @@ ShortcutTargetExist(LnkPath) {
  * 激活窗口
  * @param winTitle AHK中的WinTitle
  * @param {number} isHide 窗口是否为隐藏窗口
- * @returns {number} 
+ * @returns {number}
  */
 ActivateWindow(winTitle := "", isHide := false) {
     ; 如果匹配不到窗口且认为窗口为隐藏窗口时查找隐藏窗口
@@ -198,9 +190,9 @@ ActivateWindow(winTitle := "", isHide := false) {
 }
 
 /**
- * 查找隐藏窗口返回窗口的Hwnd 
+ * 查找隐藏窗口返回窗口的Hwnd
  * @param winTitle AHK中的WinTitle
- * @returns {array} 
+ * @returns {array}
  */
 FindHiddenWindows(winTitle) {
     WS_MINIMIZEBOX := 0x00020000
@@ -228,7 +220,7 @@ FindHiddenWindows(winTitle) {
  * 返回与指定条件匹配的所有窗口
  * @param winTitle AHK中的WinTitle
  * @param predicate 过滤窗口方法，传过Hwnd，返回bool
- * @returns {array} 
+ * @returns {array}
  */
 FindWindows(winTitle, predicate?) {
     temps := WinGetList(winTitle)
@@ -251,7 +243,7 @@ FindWindows(winTitle, predicate?) {
  *  将程序路径或参数中的{selected} 替换为选中的文字
  * @param target 程序路径的引用
  * @param args 参数的引用
- * @returns {void|number} 
+ * @returns {void|number}
  */
 ReplaceSelectedText(&target, &args) {
     text := GetSelectedText()
@@ -270,7 +262,7 @@ ReplaceSelectedText(&target, &args) {
 
 /**
  * 获取选中的文字
- * @returns {void|string} 
+ * @returns {void|string}
  */
 GetSelectedText() {
     temp := A_Clipboard
@@ -293,7 +285,7 @@ GetSelectedText() {
  * 来源: https://www.autohotkey.com/boards/viewtopic.php?t=112741
  * @param Uri 需要编码的文本
  * @param {string} encoding 编码格式
- * @returns {string} 
+ * @returns {string}
  */
 URIEncode(Uri, encoding := "UTF-8") {
     var := Buffer(StrPut(Uri, encoding), 0)
@@ -313,7 +305,7 @@ URIEncode(Uri, encoding := "UTF-8") {
 /**
  * 启动InputHook，并返回EndReason
  * @param ih InputHook对象
- * @returns {void} 
+ * @returns {void}
  */
 StartInputHook(ih) {
     ; 禁用所有热键
@@ -396,7 +388,7 @@ GetMonitorAt(x, y, default := 1) {
 /**
  * 当前窗口是最大化还是最小化
  * @param {string} winTitle AHK中的WinTitle
- * @returns {number} 
+ * @returns {number}
  */
 WindowMaxOrMin(winTitle := "A") {
     return WinGetMinMax(winTitle)
@@ -407,7 +399,7 @@ WindowMaxOrMin(winTitle := "A") {
  * @param text 需要转换的文本
  * @param color HEX颜色值
  * @param fontFamily 字体
- * @returns {string} 
+ * @returns {string}
  */
 FormatHtmlStyle(text, color, fontFamily) {
     style := "Color: '" color "'; font-fontFamily: '" fontFamily ";"
@@ -427,7 +419,7 @@ FormatHtmlStyle(text, color, fontFamily) {
 /**
  * Html编码
  * @param text 需要编码的文本
- * @returns {void} 
+ * @returns {void}
  */
 HtmlEncode(text) {
     text := strReplace(text, "&", "&amp;")

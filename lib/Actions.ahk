@@ -4,32 +4,27 @@
  * @param {string} args 参数
  * @param {string} workingDir 默认工作目录
  * @param {number} admin 是否为管理员启动
- * @returns {void} 
+ * @returns {void}
  */
 RunProgramsExplorer(target, args := "", workingDir := "", admin := false, runInBackground := false) {
     ; https://github.com/karmaniverous/dot-code
     ; Is the current window an Explorer window?
-
     try {
         hWnd := WinGetClass("A")
     } catch {
         hWnd := ""
     }
-
     if (hWnd == "CabinetWClass") {
         ; Cache the current clipboard contents.
         clipboard := A_Clipboard
-
         ; Clear the clipboard & copy selected files.
         A_Clipboard := ""
         Send "^c"
         ClipWait(0.5)
-
         ; If no files are selected...
         if (A_Clipboard == "") {
             ; Get the current window's ID.
             hwnd := WinGetID("A")
-
             ; Find the current window's COM object.
             for window in ComObject("Shell.Application").Windows {
                 if (window && window.hwnd && window.hwnd == hwnd)
@@ -41,11 +36,10 @@ RunProgramsExplorer(target, args := "", workingDir := "", admin := false, runInB
             ; Quote & space-concatenate selected files.
             workingDir := StrReplace(A_Clipboard, "`n", '" "')
         }
-
         ; Restore the clipboard.
         A_Clipboard := clipboard
     }
-    ; MsgBox workingDir
+    ;MsgBox workingDir admin
     RunPrograms(target, args, workingDir, admin, runInBackground)
 }
 
@@ -78,7 +72,7 @@ MakeWindowDraggable() {
  * @param {string} workingDir 工作文件夹
  * @param {bool} admin 是否为管理员启动
  * @param {bool} isHide 窗口是否为隐藏窗口
- * @returns {void} 
+ * @returns {void}
  */
 ActivateOrRun(winTitle := "", target := "", args := "", workingDir := "", admin := false, isHide := false,
     runInBackground := false) {
@@ -102,7 +96,7 @@ ActivateOrRun(winTitle := "", target := "", args := "", workingDir := "", admin 
  * 轮换程序窗口
  * @param winTitle AHK中的WinTitle
  * @param hwnds 活动窗口的句柄数组
- * @returns {void|number} 
+ * @returns {void|number}
  */
 LoopRelatedWindows(winTitle?, hwnds?) {
     ; 如果没有传句柄数组则获取当前窗口的
@@ -172,7 +166,7 @@ SmartCloseWindow() {
  * 窗口居中并修改其大小
  * @param width 窗口宽度
  * @param height 窗口高度
- * @returns {void} 
+ * @returns {void}
  */
 CenterAndResizeWindow(width, height) {
     if NotActiveWin() {
@@ -259,7 +253,7 @@ SystemShiftAltTab() {
 
 /**
  * 关闭窗口（直接杀进程）
- * @returns  
+ * @returns
  */
 CloseWindowProcesses() {
     if NotActiveWin() {
@@ -344,7 +338,7 @@ HoldDownRShiftKey() {
 /**
  * 绑定当前窗口到当前键上
  * @param key 当前键
- * @returns {void} 
+ * @returns {void}
  */
 ; BindWindow() {
 ;   windowID := false
@@ -445,7 +439,7 @@ ToggleCapslock() {
 
 /**
  * 一次打开多个链接或程序
- * @param urls 链接或程序 
+ * @param urls 链接或程序
  */
 LaunchMultiple(urls*) {
     for index, url in urls {
