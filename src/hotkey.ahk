@@ -4,8 +4,7 @@
 #Include <NotifyClass-NotifyCreator\Notify>
 
 ; $Win
-*#e:: ActivateOrRun("此电脑 ahk_class CabinetWClass", "explorer.exe")
-*#t:: ActivateOrRun("", "shortcuts\Notepad3.lnk")
+*#t:: ActivateOrRun("", "zed")
 *#m:: ToggleWindowTopMost()
 *#q:: SmartCloseWindow()
 *#s:: MaximizeWindow()
@@ -20,30 +19,6 @@
     RunProgramsExplorer("wt.exe", "", "F:", GetKeyState("Ctrl", "P"))
     ;ActivateOrRun("ahk_class CASCADIA_HOSTING_WINDOW_CLASS", "wt", "-M -d F:")
 }
-
-
-;ChangeAudioOutput(device, show_msg_box := true) {
-;    symbols := Map("Headphones", "🎧耳机", "Speakers", "🔊扬声器", "Display", "🖥显示器️")
-;    if (show_msg_box)
-;        Notify.Show(symbols[device], , , , , 'dur=1 pos=BC ts=12')
-;    Run("nircmd.exe setdefaultsounddevice " device)  ; change device using nircmd
-;}
-;ChangeAudioOutput("Speakers", false)
-
-;; 通过快捷键来快速切换扬声器跟耳机
-;#a:: {
-;    static device := "Speakers"
-;    if (device = "Headphones") {
-;        device := "Speakers"
-;    }
-;    else if (device = "Speakers") {
-;        device := "Headphones"
-;    }
-;    else if not (device := "Headphones" or device := "Speakers") {
-;        device := "Headphones"
-;    }
-;    ChangeAudioOutput(device, true)
-;}
 
 ; Win + A：实时轮询所有当前可用的音频输出设备
 #a:: {
